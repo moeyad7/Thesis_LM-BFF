@@ -22,6 +22,7 @@ from sentence_transformers import SentenceTransformer, util
 from copy import deepcopy
 import pandas as pd
 import logging
+from sklearn.metrics import f1_score, precision_score, recall_score
 
 logger = logging.getLogger(__name__)
 
@@ -532,7 +533,12 @@ class TextClassificationProcessor(DataProcessor):
         return examples
         
 def text_classification_metrics(task_name, preds, labels):
-    return {"acc": (preds == labels).mean()}
+    accuracy = (preds == labels).mean()
+    precision_macro = precision_score(labels, preds, average='macro')
+    recall_macro = recall_score(labels, preds, average='macro')
+    f1_macro = f1_score(labels, preds, average='macro')
+    
+    return {"acc": accuracy, "f1_macro": f1_macro, "precision_macro": precision_macro, "recall_macro": recall_macro}
 
 # Add your task to the following mappings
 
