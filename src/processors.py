@@ -508,7 +508,7 @@ class TextClassificationProcessor(DataProcessor):
         elif self.task_name == "mpqa":
             return list(range(2))
         elif self.task_name == "ar-en-sa":
-            return list(range(3))
+            return ['positive', 'negative', 'neutral']
         else:
             raise Exception("task_name not supported.")
         
