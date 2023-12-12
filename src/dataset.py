@@ -226,8 +226,6 @@ def tokenize_multipart_input(
         attention_mask.append(0)
         token_type_ids.append(0)
         
-    print(len(input_ids), len(attention_mask), len(token_type_ids))
-    print(max_length)
 
     # Truncate
     if len(input_ids) > max_length:
@@ -237,9 +235,14 @@ def tokenize_multipart_input(
             token_type_ids = token_type_ids[-max_length:]
         else:
             # Default is to truncate the tail
+            print(tokenizer.decode(input_ids))
+            print(len(input_ids))
             input_ids = input_ids[:max_length]
             attention_mask = attention_mask[:max_length]
             token_type_ids = token_type_ids[:max_length]
+            print(tokenizer.decode(input_ids))
+            print(len(input_ids))
+            
 
     # Find mask token
     if prompt:
