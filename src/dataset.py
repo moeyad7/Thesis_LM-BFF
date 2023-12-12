@@ -72,7 +72,6 @@ def tokenize_multipart_input(
     support_labels=None,
 ):
     def enc(text):
-        print("hello", text)
         return tokenizer.encode(text, add_special_tokens=False)
 
     input_ids = []
@@ -131,7 +130,12 @@ def tokenize_multipart_input(
                 new_tokens.append(label_word)
             elif part[:5] == 'sent_':
                 sent_id = int(part.split('_')[1])
-                new_tokens += enc(input_text_list[sent_id]) 
+                sentence = enc(input_text_list[sent_id])
+                print(len(sentence))
+                if(len(sentence) > max_length):
+                    new_tokens = sentence[:max_length]
+                else:
+                    new_tokens += sentence
             elif part[:6] == '+sent_':
                 # Add space
                 sent_id = int(part.split('_')[1])
@@ -236,13 +240,9 @@ def tokenize_multipart_input(
             token_type_ids = token_type_ids[-max_length:]
         else:
             # Default is to truncate the tail
-            print(tokenizer.decode(input_ids))
-            print(len(input_ids))
             input_ids = input_ids[:max_length]
             attention_mask = attention_mask[:max_length]
             token_type_ids = token_type_ids[:max_length]
-            print(tokenizer.decode(input_ids))
-            print(len(input_ids))
             
 
     # Find mask token
