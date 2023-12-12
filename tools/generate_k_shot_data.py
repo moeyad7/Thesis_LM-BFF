@@ -52,14 +52,6 @@ def load_datasets(data_dir, tasks):
                     lines = f.readlines()
                 dataset[split] = lines
             datasets[task] = dataset
-        elif task in ["ar-en-sa"]:
-            dataset = {}
-            dirname = os.path.join(data_dir, task)
-            splits = ["train", "test","dev"]
-            for split in splits:
-                filename = os.path.join(dirname, f"{split}.csv")
-                dataset[split] = pd.read_csv(filename, header=None)
-            datasets[task] = dataset
         else:
             # Other datasets (csv)
             dataset = {}
