@@ -32,6 +32,8 @@ def get_label(task, line):
             return line[-1] 
         else:
             raise NotImplementedError
+    elif task in ["ar-en-sa"]:
+        return line[1]
     else:
         return line[0]
 
