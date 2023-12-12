@@ -130,12 +130,7 @@ def tokenize_multipart_input(
                 new_tokens.append(label_word)
             elif part[:5] == 'sent_':
                 sent_id = int(part.split('_')[1])
-                sentence = enc(input_text_list[sent_id])
-                if(len(sentence) > max_length):
-                    print("I am longer than max_length")
-                    new_tokens = sentence[:max_length]
-                else:
-                    new_tokens += sentence
+                new_tokens += enc(input_text_list[sent_id])
             elif part[:6] == '+sent_':
                 # Add space
                 sent_id = int(part.split('_')[1])
@@ -224,7 +219,7 @@ def tokenize_multipart_input(
     # Padding
     if first_sent_limit is not None and len(input_ids) > max_length:
         # If using sentence limit, the total length still exceeds the maximum limit, report a warning
-        logger.warn("Input exceeds max_length limit: {}".format(tokenizer.decode(input_ids)))
+        logger.warn("Input exceeds max_length limit ({}): {}".format(len(input_ids), tokenizer.decode(input_ids)))
 
     while len(input_ids) < max_length:
         input_ids.append(tokenizer.pad_token_id)
