@@ -6,7 +6,7 @@ import transformers
 from transformers.modeling_bert import BertPreTrainedModel, BertForSequenceClassification, BertModel, BertOnlyMLMHead
 from transformers.modeling_roberta import RobertaForSequenceClassification, RobertaModel, RobertaLMHead, RobertaClassificationHead
 from transformers.modeling_outputs import SequenceClassifierOutput
-
+from transformers import AutoModelForSequenceClassification, AutoModelForMaskedLM, AutoModelForTokenClassification, AutoModel
 import logging
 logger = logging.getLogger(__name__)
 
@@ -193,3 +193,6 @@ class RobertaForPromptFinetuning(BertPreTrainedModel):
             # Regression output
             output = (torch.exp(logits[..., 1].unsqueeze(-1)) * (self.ub - self.lb) + self.lb,)
         return ((loss,) + output) if loss is not None else output
+
+
+# class AutoForPromptFinetuning(BertPreTrainedModel):
