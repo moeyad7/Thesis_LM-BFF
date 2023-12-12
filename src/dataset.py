@@ -131,8 +131,8 @@ def tokenize_multipart_input(
             elif part[:5] == 'sent_':
                 sent_id = int(part.split('_')[1])
                 sentence = enc(input_text_list[sent_id])
-                print(len(sentence))
                 if(len(sentence) > max_length):
+                    print("I am longer than max_length")
                     new_tokens = sentence[:max_length]
                 else:
                     new_tokens += sentence
