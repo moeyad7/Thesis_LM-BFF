@@ -123,6 +123,10 @@ def main():
             args.key = 'mpqa_dev_eval_acc'
             args.test_key = 'mpqa_test_eval_acc'
             print_name = condition['task_name']
+        elif condition['task_name'] == 'ar-en-sa':
+            args.key = 'ar-en-sa_dev_eval_acc'
+            args.test_key = 'ar-en-sa_test_eval_acc'
+            print_name = condition['task_name']
         else:
             raise NotImplementedError
 

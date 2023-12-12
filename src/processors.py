@@ -23,6 +23,7 @@ from copy import deepcopy
 import pandas as pd
 import logging
 from sklearn.metrics import f1_score, precision_score, recall_score
+import csv 
 
 logger = logging.getLogger(__name__)
 
@@ -465,7 +466,7 @@ class WnliProcessor(DataProcessor):
 
 class TextClassificationProcessor(DataProcessor):
     """
-    Data processor for text classification datasets (mr, sst-5, subj, trec, cr, mpqa).
+    Data processor for text classification datasets (mr, sst-5, subj, trec, cr, mpqa, ar-en-sa).
     """
 
     def __init__(self, task_name):
@@ -506,6 +507,8 @@ class TextClassificationProcessor(DataProcessor):
             return list(range(2))
         elif self.task_name == "mpqa":
             return list(range(2))
+        elif self.task_name == "ar-en-sa":
+            return list(range(3))
         else:
             raise Exception("task_name not supported.")
         
@@ -527,6 +530,8 @@ class TextClassificationProcessor(DataProcessor):
                 examples.append(InputExample(guid=guid, text_a=text, short_text=line[1], label=line[0])) 
             elif self.task_name in ['mr', 'sst-5', 'subj', 'trec', 'cr', 'mpqa']:
                 examples.append(InputExample(guid=guid, text_a=line[1], label=line[0]))
+            elif self.task_name in ['ar-en-sa']:
+                examples.append(InputExample(guid=guid, text_a=line[0], label=line[1]))
             else:
                 raise Exception("Task_name not supported.")
 
@@ -559,7 +564,8 @@ processors_mapping = {
     "subj": TextClassificationProcessor("subj"),
     "trec": TextClassificationProcessor("trec"),
     "cr": TextClassificationProcessor("cr"),
-    "mpqa": TextClassificationProcessor("mpqa")
+    "mpqa": TextClassificationProcessor("mpqa"),
+    'ar-en-sa': TextClassificationProcessor("ar-en-sa")
 }
 
 num_labels_mapping = {
@@ -578,7 +584,8 @@ num_labels_mapping = {
     "subj": 2,
     "trec": 6,
     "cr": 2,
-    "mpqa": 2
+    "mpqa": 2,
+    "ar-en-sa": 3,
 }
 
 output_modes_mapping = {
@@ -598,7 +605,8 @@ output_modes_mapping = {
     "subj": "classification",
     "trec": "classification",
     "cr": "classification",
-    "mpqa": "classification"
+    "mpqa": "classification",
+    "ar-en-sa": "classification"
 }
 
 # Return a function that takes (task_name, preds, labels) as inputs
@@ -620,6 +628,7 @@ compute_metrics_mapping = {
     "trec": text_classification_metrics,
     "cr": text_classification_metrics,
     "mpqa": text_classification_metrics,
+    "ar-en-sa": text_classification_metrics
 }
 
 # For regression task only: median

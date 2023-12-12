@@ -9,6 +9,7 @@ from transformers import AutoConfig, AutoModelForSequenceClassification, AutoTok
 from transformers import GlueDataTrainingArguments, glue_compute_metrics
 from transformers.data.metrics import simple_accuracy
 from transformers.data.processors.glue import glue_processors
+from sklearn.metrics import precision_recall_fscore_support
 
 def get_glue_label(task, line):
     if task in ["MNLI", "MRPC", "QNLI", "QQP", "RTE", "SNLI", "SST-2", "STS-B", "WNLI", "CoLA"]:
@@ -39,7 +40,7 @@ def get_glue_label(task, line):
         raise NotImplementedError
 
 def get_labels(data_dir, k, seed, task, print_name):
-    if print_name in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec']:
+    if print_name in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec', 'ar-en-sa']:
         data = pd.read_csv(os.path.join(data_dir, print_name, '{}-{}'.format(k, seed), 'test.csv'), header=None).values.tolist()
         label_ids = np.zeros((len(data)), dtype=np.uint8)
         for i, example in enumerate(data):
@@ -163,6 +164,9 @@ def main():
         elif condition['task_name'] == 'mpqa':
             args.key = 'mpqa_dev_eval_acc'
             args.test_key = 'mpqa_test_eval_acc'
+        elif condition['task_name'] == 'ar-en-sa':
+            args.key = 'ar-en-sa_dev_eval_acc'
+            args.test_key = 'ar-en-sa_test_eval_acc'
         else:
             raise NotImplementedError
 
@@ -248,7 +252,8 @@ def main():
         'cr': 'cr',
         'mpqa': 'mpqa',
         'subj': 'subj',
-        'trec': 'trec'
+        'trec': 'trec',
+        'ar-en-sa': 'ar-en-sa',
     }
 
     tokenizer = AutoTokenizer.from_pretrained('roberta-large')
@@ -271,10 +276,13 @@ def main():
         
         # Compute metrics
         preds = mean_logits.argmax(-1)
-        if condition['task_name'] in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec']:
-            metric = {"acc": simple_accuracy(preds, labels)}
-        else:
-            metric = glue_compute_metrics(condition['task_name'], preds, labels)
+        if condition['task_name'] in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec','ar-en-sa']:
+            acc = simple_accuracy(preds, labels)
+    
+            # Calculate precision, recall, and F1 score
+            precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average='macro')
+
+            metric = {"acc": acc, "precision_macro": precision, "recall_macro": recall, "f1_macro": f1}
 
         ensemble_result[seed_id] = metric[args.test_key.split('_')[-1]]
         if len(args.test_key2) > 0:
