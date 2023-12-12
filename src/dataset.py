@@ -80,7 +80,6 @@ def tokenize_multipart_input(
     mask_pos = None # Position of the mask token
 
     if prompt:
-        print("I am in prompt")
         """
         Concatenate all sentences and prompts based on the provided template.
         Template example: '*cls*It was*mask*.*sent_0**<sep>*label_0:*sent_1**<sep>**label_1*:*sent_2**<sep>*'
@@ -196,7 +195,6 @@ def tokenize_multipart_input(
             if segment_plus_1_flag:
                 segment_id += 1
     else:
-        print("I am in else")
         input_ids = [tokenizer.cls_token_id]
         attention_mask = [1]
         token_type_ids = [0]

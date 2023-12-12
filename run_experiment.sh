@@ -93,6 +93,11 @@ case $TASK in
         MAPPING="{0:'terrible',1:'great'}"
         TASK_EXTRA="--first_sent_limit 110  --double_demo"
         ;;
+    ar-en-sa)
+        TEMPLATE=*cls**sent_0*_It_was*mask*.*sep+*
+        MAPPING="{'positive':'good','negative':'bad','neutral':'neutral'}"
+        TASK_EXTRA="--first_sent_limit 512  --double_demo"
+        ;;
 
 esac
 
@@ -107,7 +112,7 @@ GS=$(expr $BS / $REAL_BS)
 TRIAL_IDTF=$RANDOM
 DATA_DIR=data/k-shot/$TASK/$K-$SEED
 
-python run.py \
+python3 run.py \
   --task_name $TASK \
   --data_dir $DATA_DIR \
   --overwrite_output_dir \
