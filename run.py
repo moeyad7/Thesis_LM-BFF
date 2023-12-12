@@ -79,7 +79,7 @@ class DynamicDataTrainingArguments(DataTrainingArguments):
 
     num_demo: Optional[int] = field(
         default=1,
-        metadata={"help": "Number of demonstrations from each class"}
+        metadata={"help": "Number of demonstrations from each class in the sentence"}
     )
 
     auto_demo: bool = field(
