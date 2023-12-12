@@ -72,6 +72,7 @@ def tokenize_multipart_input(
     support_labels=None,
 ):
     def enc(text):
+        print("hello", text)
         return tokenizer.encode(text, add_special_tokens=False)
 
     input_ids = []
