@@ -614,17 +614,14 @@ def main():
             test_results.update(test_result)
 
     with FileLock('log.lock'):
-        with open('log.jsonl', 'a') as f:
+        with open('log', 'a') as f:
             final_result.update(vars(model_args))
             final_result.update(vars(training_args))
             final_result.update(vars(data_args))
-            
             if 'evaluation_strategy' in final_result:
                 final_result.pop('evaluation_strategy')
-
-            json.dump(final_result, f)
-            f.write('\n')
-
+            f.write(str(final_result) + '\n')
+    
     return eval_results
 
 if __name__ == "__main__":
