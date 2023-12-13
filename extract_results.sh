@@ -2,7 +2,7 @@
 
 # Specify the file name
 file_name="log.txt"
-output_file="results2.csv"
+output_file="results.csv"
 
 # Check if the file exists
 if [ ! -f "$file_name" ]; then
