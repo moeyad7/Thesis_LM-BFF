@@ -254,7 +254,10 @@ def load_dataset(task, data_dir):
         lines = pd.read_csv(os.path.join(data_dir, 'train.csv')).values.tolist()
         dataset = []
         for line in lines:
-            dataset.append({'label': line[0], 'text': [line[1]]})
+            if(task in ['ar-en-sa']):
+                dataset.append({'label': line[1], 'text': [line[0]]})
+            else:
+                dataset.append({'label': line[0], 'text': [line[1]]})
 
     return dataset
 
