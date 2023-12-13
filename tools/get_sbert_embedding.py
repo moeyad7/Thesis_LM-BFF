@@ -6,12 +6,14 @@ from tqdm import tqdm
 import pandas as pd
 
 def get_sentence(task, line):
-    if task in ['mr', 'sst-5', 'subj', 'trec', 'cr', 'mpqa','ar-en-sa']:
+    if task in ['mr', 'sst-5', 'subj', 'trec', 'cr', 'mpqa','ar-ner-corp']:
         # Text classification tasks
         if line[1] is None or pd.isna(line[1]):
             return ''
         else:
             return line[1]
+    elif task in ['ar-en-sa']:
+        return line[0]
     else:
         # GLUE tasks
         line = line.strip().split('\t')
@@ -58,7 +60,7 @@ def load_datasets(data_dir, task, do_test=False):
         if do_test:
             splits.append('test')
     for split in splits:
-        if task in ['mr', 'sst-5', 'subj', 'trec', 'cr', 'mpqa','ar-en-sa']:
+        if task in ['mr', 'sst-5', 'subj', 'trec', 'cr', 'mpqa','ar-en-sa','ar-ner-corp']:
             filename = os.path.join(data_dir, f"{split}.csv")
             dataset[split] = pd.read_csv(filename, header=None).values.tolist()
         else:

@@ -34,6 +34,8 @@ def get_label(task, line):
             raise NotImplementedError
     elif task in ["ar-en-sa"]:
         return line[1]
+    elif task in ["ar-ner-corp"]:
+        return line[0]
     else:
         return line[0]
 
@@ -81,7 +83,7 @@ def main():
     parser.add_argument("--k", type=int, default=16,
         help="Training examples for each class.")
     parser.add_argument("--task", type=str, nargs="+", 
-        default=['SST-2', 'sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec', 'CoLA', 'MRPC', 'QQP', 'STS-B', 'MNLI', 'SNLI', 'QNLI', 'RTE','ar-en-sa'],
+        default=['SST-2', 'sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec', 'CoLA', 'MRPC', 'QQP', 'STS-B', 'MNLI', 'SNLI', 'QNLI', 'RTE','ar-en-sa','ar-ner-corp'],
         help="Task names")
     parser.add_argument("--seed", type=int, nargs="+", 
         default=[100, 13, 21, 42, 87],

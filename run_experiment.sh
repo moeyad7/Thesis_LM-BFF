@@ -98,6 +98,10 @@ case $TASK in
         MAPPING="{'positive':'good','negative':'bad','neutral':'neutral'}"
         TASK_EXTRA="--first_sent_limit 512  --double_demo"
         ;;
+    ar-ner-corp)
+        TEMPLATE=*cls**sent_0*_It_is*mask*.*sep+*
+        MAPPING="{'O':'اخر','LOC':'موقع','ORG':'منظمة','PER':'شخص','MISC':'متنوع'}"
+        ;;
 
 esac
 

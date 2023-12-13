@@ -466,7 +466,7 @@ class WnliProcessor(DataProcessor):
 
 class TextClassificationProcessor(DataProcessor):
     """
-    Data processor for text classification datasets (mr, sst-5, subj, trec, cr, mpqa, ar-en-sa).
+    Data processor for text classification datasets (mr, sst-5, subj, trec, cr, mpqa, ar-en-sa, ar-ner-corp).
     """
 
     def __init__(self, task_name):
@@ -509,6 +509,8 @@ class TextClassificationProcessor(DataProcessor):
             return list(range(2))
         elif self.task_name == "ar-en-sa":
             return ['positive', 'negative', 'neutral']
+        elif self.task_name == "ar-ner-corp":
+            return ['PER', 'ORG', 'LOC', 'MISC','O']
         else:
             raise Exception("task_name not supported.")
         
@@ -532,6 +534,8 @@ class TextClassificationProcessor(DataProcessor):
                 examples.append(InputExample(guid=guid, text_a=line[1], label=line[0]))
             elif self.task_name in ['ar-en-sa']:
                 examples.append(InputExample(guid=guid, text_a=line[0], label=line[1]))
+            elif self.task_name in ['ar-ner-corp']:
+                examples.append(InputExample(guid=guid, text_a=line[1], label=line[0]))
             else:
                 raise Exception("Task_name not supported.")
 
@@ -565,7 +569,8 @@ processors_mapping = {
     "trec": TextClassificationProcessor("trec"),
     "cr": TextClassificationProcessor("cr"),
     "mpqa": TextClassificationProcessor("mpqa"),
-    'ar-en-sa': TextClassificationProcessor("ar-en-sa")
+    'ar-en-sa': TextClassificationProcessor("ar-en-sa"),
+    'ar-ner-corp': TextClassificationProcessor("ar-ner-corp"),
 }
 
 num_labels_mapping = {
@@ -586,6 +591,7 @@ num_labels_mapping = {
     "cr": 2,
     "mpqa": 2,
     "ar-en-sa": 3,
+    "ar-ner-corp": 5,
 }
 
 output_modes_mapping = {
@@ -606,7 +612,8 @@ output_modes_mapping = {
     "trec": "classification",
     "cr": "classification",
     "mpqa": "classification",
-    "ar-en-sa": "classification"
+    "ar-en-sa": "classification",
+    "ar-ner-corp": "classification",
 }
 
 # Return a function that takes (task_name, preds, labels) as inputs
@@ -628,7 +635,8 @@ compute_metrics_mapping = {
     "trec": text_classification_metrics,
     "cr": text_classification_metrics,
     "mpqa": text_classification_metrics,
-    "ar-en-sa": text_classification_metrics
+    "ar-en-sa": text_classification_metrics,
+    "ar-ner-corp": text_classification_metrics,
 }
 
 # For regression task only: median

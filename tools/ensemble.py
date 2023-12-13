@@ -40,7 +40,7 @@ def get_glue_label(task, line):
         raise NotImplementedError
 
 def get_labels(data_dir, k, seed, task, print_name):
-    if print_name in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec', 'ar-en-sa']:
+    if print_name in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec', 'ar-en-sa','ar-ner-corp']:
         data = pd.read_csv(os.path.join(data_dir, print_name, '{}-{}'.format(k, seed), 'test.csv'), header=None).values.tolist()
         label_ids = np.zeros((len(data)), dtype=np.uint8)
         for i, example in enumerate(data):
@@ -167,6 +167,9 @@ def main():
         elif condition['task_name'] == 'ar-en-sa':
             args.key = 'ar-en-sa_dev_eval_acc'
             args.test_key = 'ar-en-sa_test_eval_acc'
+        elif condition['task_name'] == 'ar-ner-corp':
+            args.key = 'ar-ner-corp_dev_eval_acc'
+            args.test_key = 'ar-ner-corp_test_eval_acc'
         else:
             raise NotImplementedError
 
@@ -254,6 +257,7 @@ def main():
         'subj': 'subj',
         'trec': 'trec',
         'ar-en-sa': 'ar-en-sa',
+        'ar-ner-corp': 'ar-ner-corp',
     }
 
     tokenizer = AutoTokenizer.from_pretrained('roberta-large')
@@ -276,7 +280,7 @@ def main():
         
         # Compute metrics
         preds = mean_logits.argmax(-1)
-        if condition['task_name'] in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec','ar-en-sa']:
+        if condition['task_name'] in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec','ar-en-sa','ar-ner-corp']:
             acc = simple_accuracy(preds, labels)
     
             # Calculate precision, recall, and F1 score
