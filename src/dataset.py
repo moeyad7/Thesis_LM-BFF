@@ -464,7 +464,7 @@ class FewShotDataset(torch.utils.data.Dataset):
                     prompt=args.prompt,
                     template=template,
                     label_word_list=self.label_word_list,
-                    verbose=True if _ == 0 else False,
+                    verbose= False#True if _ == 0 else False,
                 ))
 
                 _ += 1
