@@ -496,7 +496,6 @@ class FewShotDataset(torch.utils.data.Dataset):
                 if len(self.label_list) == 1:
                     # Regression
                     label = '0' if float(label) <= median_mapping[self.args.task_name] else '1'
-                print(counts[label],max_demo_per_label)
                 if counts[label] < max_demo_per_label:
                     selection.append(context_examples[i])
                     counts[label] += 1

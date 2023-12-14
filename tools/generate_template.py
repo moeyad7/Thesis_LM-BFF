@@ -288,7 +288,7 @@ def search_template(model, tokenizer, task_name, k, seed, beam, output_dir, data
         'QNLI': {'not_entailment':'No','entailment':'Yes'},
         'RTE': {'not_entailment':'No','entailment':'Yes'},
         'ar-en-sa': {'positive':'good','negative':'bad','neutral':'neutral'},
-        'ar-ner-corp':{'O':'اخر','LOC':'موقع','ORG':'منظمة','PER':'شخص','MISC':'متنوع'},
+        'ar-ner-corp':{'O':'other','LOC':'location','ORG':'organization','PERS':'person','MISC':'diverse'},
         'my-ar-sa':{'pos':'good','neg':'bad'},
     }
 

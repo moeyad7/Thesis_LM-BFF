@@ -510,7 +510,7 @@ class TextClassificationProcessor(DataProcessor):
         elif self.task_name == "ar-en-sa":
             return ['positive', 'negative', 'neutral']
         elif self.task_name == "ar-ner-corp":
-            return ['PER', 'ORG', 'LOC', 'MISC','O']
+            return ['PERS', 'ORG', 'LOC', 'MISC','O']
         elif self.task_name == "my-ar-sa":
             return ['pos', 'neg']
         else:
