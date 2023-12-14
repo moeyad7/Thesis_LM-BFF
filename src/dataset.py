@@ -652,8 +652,8 @@ class FewShotDataset(torch.utils.data.Dataset):
 
         if verbose:
             logger.info("*** Example ***")
-            logger.info("guid: %s" % (example.guid))
-            logger.info("features: %s" % features)
+            # logger.info("guid: %s" % (example.guid))
+            # logger.info("features: %s" % features)
             # logger.info("text: %s" % self.tokenizer.decode(features.input_ids))
 
         return features
