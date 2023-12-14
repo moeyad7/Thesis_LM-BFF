@@ -654,7 +654,7 @@ class FewShotDataset(torch.utils.data.Dataset):
             logger.info("*** Example ***")
             logger.info("guid: %s" % (example.guid))
             logger.info("features: %s" % features)
-            logger.info("text: %s" % self.tokenizer.decode(features.input_ids))
+            # logger.info("text: %s" % self.tokenizer.decode(features.input_ids))
 
         return features
 

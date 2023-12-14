@@ -382,7 +382,7 @@ def main():
                     new_template = new_template + sub_template # Put context at the end
                 else:
                     new_template = sub_template + new_template # Put context at the beginning
-            # logger.info("| {} => {}".format(data_args.template, new_template))
+            logger.info("| {} => {}".format(data_args.template, new_template))
             data_args.template = new_template
         else:
             logger.info("Automatically convert the template to using demonstrations.")
@@ -403,7 +403,7 @@ def main():
                         # Replace mask
                         sub_template = sub_template.replace("*mask*", "*label_{}*".format(label_id))
                         new_template = new_template + sub_template
-                    # logger.info("| {} => {}".format(data_args.template_list[i], new_template))
+                    logger.info("| {} => {}".format(data_args.template_list[i], new_template))
                     data_args.template_list[i] = new_template
             else:
                 old_template = data_args.template
@@ -421,7 +421,7 @@ def main():
                     # Replace mask
                     sub_template = sub_template.replace("*mask*", "*label_{}*".format(label_id))
                     new_template = new_template + sub_template
-                # logger.info("| {} => {}".format(data_args.template, new_template))
+                logger.info("| {} => {}".format(data_args.template, new_template))
                 data_args.template = new_template
 
     # Create config
