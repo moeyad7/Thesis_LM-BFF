@@ -242,7 +242,7 @@ def tokenize_multipart_input(
 
     # Find mask token
     if prompt:
-        print(tokenizer.decode(input_ids))
+        # print(tokenizer.decode(input_ids))
         mask_pos = [input_ids.index(tokenizer.mask_token_id)]
         # Make sure that the masked position is inside the max_length
         assert mask_pos[0] < max_length
