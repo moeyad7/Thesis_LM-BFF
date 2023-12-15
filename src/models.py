@@ -202,7 +202,7 @@ class ArabertTwitterForPromptFinetuning(BertPreTrainedModel):
             self.num_labels = config.num_labels
 
             # Use AutoModel to automatically load the appropriate model based on the provided configuration
-            self.roberta = AutoModel.from_config(config)
+            self.auto = AutoModel.from_config(config)
             
             # Use AutoModelForSequenceClassification for the classification head
             self.classifier = AutoModelForSequenceClassification.from_config(config)
@@ -236,7 +236,7 @@ class ArabertTwitterForPromptFinetuning(BertPreTrainedModel):
                 mask_pos = mask_pos.squeeze()
     
             # Encode everything
-            outputs = self.arabert(
+            outputs = self.auto(
                 input_ids,
                 attention_mask=attention_mask
             )

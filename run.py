@@ -431,6 +431,8 @@ def main():
         finetuning_task=data_args.task_name,
         cache_dir=model_args.cache_dir,
     )
+    
+    print('This is the model type: ',config.model_type)
 
     if 'prompt' in model_args.few_shot_type:
         if config.model_type == 'roberta':
@@ -438,7 +440,7 @@ def main():
         elif config.model_type == 'bert':
             model_fn = BertForPromptFinetuning
         elif config.model_type == 'arabert':
-            print("hi")
+            print("hi gedan")
             model_fn = ArabertTwitterForPromptFinetuning
         else:
             raise NotImplementedError
