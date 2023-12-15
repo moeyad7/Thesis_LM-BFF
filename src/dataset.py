@@ -242,7 +242,7 @@ def tokenize_multipart_input(
 
     # Find mask token
     if prompt:
-        # print(tokenizer.decode(input_ids))
+        print(tokenizer.decode(input_ids))
         mask_pos = [input_ids.index(tokenizer.mask_token_id)]
         # Make sure that the masked position is inside the max_length
         assert mask_pos[0] < max_length
@@ -464,7 +464,7 @@ class FewShotDataset(torch.utils.data.Dataset):
                     prompt=args.prompt,
                     template=template,
                     label_word_list=self.label_word_list,
-                    verbose= False#True if _ == 0 else False,
+                    verbose= True if _ == 0 else False,
                 ))
 
                 _ += 1
