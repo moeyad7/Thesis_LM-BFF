@@ -200,13 +200,6 @@ class ArabertTwitterForPromptFinetuning(BertPreTrainedModel):
         def __init__(self, config):
             super().__init__(config)
             self.num_labels = config.num_labels
-            self.arabert = AutoModel.from_pretrained("aubmindlab/bert-base-arabertv02-twitter")
-            self.classifier = AutoModelForSequenceClassification.from_config(config)
-            self.lm_head = AutoModelForMaskedLM.from_config(config)
-            self.init_weights()
-            
-            super().__init__(config)
-            self.num_labels = config.num_labels
 
             # Use AutoModel to automatically load the appropriate model based on the provided configuration
             self.roberta = AutoModel.from_config(config)
@@ -215,7 +208,7 @@ class ArabertTwitterForPromptFinetuning(BertPreTrainedModel):
             self.classifier = AutoModelForSequenceClassification.from_config(config)
 
             # The language modeling head remains the same
-            self.lm_head = RobertaLMHead(config)
+            self.lm_head = AutoModelForMaskedLM(config)
             self.init_weights()
     
             # These attributes should be assigned once the model is initialized

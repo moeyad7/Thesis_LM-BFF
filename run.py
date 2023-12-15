@@ -438,6 +438,7 @@ def main():
         elif config.model_type == 'bert':
             model_fn = BertForPromptFinetuning
         elif config.model_type == 'arabert':
+            print("hi")
             model_fn = ArabertTwitterForPromptFinetuning
         else:
             raise NotImplementedError
