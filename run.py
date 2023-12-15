@@ -16,7 +16,7 @@ from transformers import GlueDataTrainingArguments as DataTrainingArguments
 from transformers import HfArgumentParser, TrainingArguments, set_seed
 
 from src.dataset import FewShotDataset
-from src.models import BertForPromptFinetuning, RobertaForPromptFinetuning, resize_token_type_embeddings
+from src.models import BertForPromptFinetuning, RobertaForPromptFinetuning, resize_token_type_embeddings ,ArabertForPromptFinetuning
 from src.trainer import Trainer
 from src.processors import processors_mapping, num_labels_mapping, output_modes_mapping, compute_metrics_mapping, bound_mapping
 
@@ -437,6 +437,8 @@ def main():
             model_fn = RobertaForPromptFinetuning
         elif config.model_type == 'bert':
             model_fn = BertForPromptFinetuning
+        elif config.model_type == 'arabert':
+            model_fn = ArabertForPromptFinetuning
         else:
             raise NotImplementedError
     elif model_args.few_shot_type == 'finetune':
