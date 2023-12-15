@@ -6,7 +6,7 @@ import transformers
 from transformers.modeling_bert import BertPreTrainedModel, BertForSequenceClassification, BertModel, BertOnlyMLMHead
 from transformers.modeling_roberta import RobertaForSequenceClassification, RobertaModel, RobertaLMHead, RobertaClassificationHead
 from transformers.modeling_outputs import SequenceClassifierOutput
-from transformers import AutoModelForSequenceClassification, AutoModelOnlyMLMHead, AutoModelForTokenClassification, AutoModel
+from transformers import AutoModelForSequenceClassification, AutoModelForMaskedLM, AutoModelForTokenClassification, AutoModel
 import logging
 logger = logging.getLogger(__name__)
 
@@ -202,7 +202,7 @@ class ArabertTwitterForPromptFinetuning(BertPreTrainedModel):
             self.num_labels = config.num_labels
             self.arabert = AutoModel.from_pretrained("aubmindlab/bert-base-arabertv02-twitter")
             self.classifier = AutoModelForSequenceClassification.from_config(config)
-            self.lm_head = AutoModelOnlyMLMHead.from_config(config)
+            self.lm_head = AutoModelForMaskedLM.from_config(config)
             self.init_weights()
             
             super().__init__(config)
