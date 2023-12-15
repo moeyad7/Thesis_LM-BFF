@@ -11,7 +11,7 @@ import torch
 import numpy as np
 
 import transformers
-from transformers import AutoConfig, AutoModelForSequenceClassification, AutoTokenizer, EvalPrediction
+from transformers import AutoConfig, AutoModelForSequenceClassification, AutoTokenizer, EvalPrediction,AutoModel
 from transformers import GlueDataTrainingArguments as DataTrainingArguments
 from transformers import HfArgumentParser, TrainingArguments, set_seed
 
@@ -425,7 +425,7 @@ def main():
                 data_args.template = new_template
 
     # Create config
-    config = AutoConfig.from_pretrained(
+    config = AutoModel.from_pretrained(
         model_args.config_name if model_args.config_name else model_args.model_name_or_path,
         num_labels=num_labels,
         finetuning_task=data_args.task_name,
