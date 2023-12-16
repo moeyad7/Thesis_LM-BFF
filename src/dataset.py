@@ -636,7 +636,11 @@ class FewShotDataset(torch.utils.data.Dataset):
                 augmented_example = query_text
                 for label_id in range(len(label_map)):
                     augmented_example += support_by_label[label_id]
-
+                    
+            print("Prompt:" ,prompt)
+            print("Template:", template)
+            print("Label word list:", label_word_list)
+            print("Augmented example:", augmented_example)
             # Tokenization (based on the template)
             inputs = tokenize_multipart_input(
                 input_text_list=augmented_example,
