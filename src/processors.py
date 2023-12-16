@@ -464,41 +464,6 @@ class WnliProcessor(DataProcessor):
             examples.append(InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
         return examples
     
-class ArNERCorpProcessor(DataProcessor):
-    
-    def __init__(self, task_name):
-        self.task_name = task_name 
-    
-    def get_example_from_tensor_dict(self, tensor_dict):
-        return InputExample(
-            tensor_dict["idx"].numpy(),
-            tensor_dict["word"].numpy().decode("utf-8"),
-            tensor_dict["sentence"].numpy().decode("utf-8"),
-            str(tensor_dict["label"].numpy()),
-        )
-    
-    def get_train_examples(self, data_dir):
-        """See base class."""
-        return self._create_examples(pd.read_csv(os.path.join(data_dir, "train.csv"), header=None).values.tolist(), "train")
-
-    def get_dev_examples(self, data_dir):
-        """See base class."""
-        return self._create_examples(pd.read_csv(os.path.join(data_dir, "dev.csv"), header=None).values.tolist(), "dev")
-
-    def get_test_examples(self, data_dir):
-        """See base class."""
-        return self._create_examples(pd.read_csv(os.path.join(data_dir, "test.csv"), header=None).values.tolist(), "test")
-    
-    def get_labels(self):
-        return ['PERS', 'ORG', 'LOC', 'MISC','O']
-    
-    def _create_examples(self, lines, set_type):
-        examples = []
-        for (i, line) in enumerate(lines):
-            guid = "%s-%s" % (set_type, i)
-            examples.append(InputExample(guid=guid, text_a=line[1], text_b=line[2], label=line[0]))
-        return examples
-
 class TextClassificationProcessor(DataProcessor):
     """
     Data processor for text classification datasets (mr, sst-5, subj, trec, cr, mpqa, ar-en-sa, ar-ner-corp, my-ar-sa).
@@ -572,7 +537,7 @@ class TextClassificationProcessor(DataProcessor):
             elif self.task_name in ['ar-en-sa']:
                 examples.append(InputExample(guid=guid, text_a=line[0], label=line[1]))
             elif self.task_name in ['ar-ner-corp']:
-                examples.append(InputExample(guid=guid, text_a=line[1], label=line[0]))
+                examples.append(InputExample(guid=guid, text_a=line[1],text_b=line[2], label=line[0]))
             elif self.task_name in ['my-ar-sa']:
                 examples.append(InputExample(guid=guid, text_a=line[1], label=line[0]))
             else:
@@ -609,7 +574,7 @@ processors_mapping = {
     "cr": TextClassificationProcessor("cr"),
     "mpqa": TextClassificationProcessor("mpqa"),
     'ar-en-sa': TextClassificationProcessor("ar-en-sa"),
-    'ar-ner-corp': ArNERCorpProcessor(),
+    'ar-ner-corp': TextClassificationProcessor("ar-ner-corp"),
     'my-ar-sa': TextClassificationProcessor("my-ar-sa"),
 }
 
