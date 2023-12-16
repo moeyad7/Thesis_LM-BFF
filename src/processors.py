@@ -600,7 +600,7 @@ processors_mapping = {
     "wnli": WnliProcessor(),
     "snli": SnliProcessor(),
     "mr": TextClassificationProcessor("mr"),
-    'ar-ner-corp': ArNERCorpProcessor("ar-ner-corp"),
+    'ar-ner-corp': ArNERCorpProcessor(),
     "sst-5": TextClassificationProcessor("sst-5"),
     "subj": TextClassificationProcessor("subj"),
     "trec": TextClassificationProcessor("trec"),
