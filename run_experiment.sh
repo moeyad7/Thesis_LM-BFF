@@ -99,8 +99,8 @@ case $TASK in
         TASK_EXTRA="--first_sent_limit 512  --double_demo"
         ;;
     ar-ner-corp)
-        TEMPLATE=*cls**sent_0*_It_is*mask*.*sep+*
-        MAPPING="{'O':'other','LOC':'location','ORG':'organization','PERS':'person','MISC':'diverse'}"
+        TEMPLATE=*cls**mask*_إنها*sent_0*.*sep+*
+        MAPPING="{'O': 'آخر', 'LOC': 'موقع', 'ORG': 'منظمة', 'PERS': 'شخص', 'MISC': 'متنوع'}"
         ;;
     my-ar-sa)
         TEMPLATE=*cls**sent_0*_It_was*mask*.*sep+*
