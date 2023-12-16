@@ -455,6 +455,10 @@ class FewShotDataset(torch.utils.data.Dataset):
                     template = args.template_list[sample_idx % len(args.template_list)] # Use template in order
                 else:
                     template = args.template
+                    
+                print(example.text_a) # debug
+                print(example.text_b) # debug
+                print(example.label) # debug
 
                 self.features.append(self.convert_fn(
                     example=example,
