@@ -537,7 +537,7 @@ class TextClassificationProcessor(DataProcessor):
             elif self.task_name in ['ar-en-sa']:
                 examples.append(InputExample(guid=guid, text_a=line[0], label=line[1]))
             elif self.task_name in ['ar-ner-corp']:
-                examples.append(InputExample(guid=guid, text_a=line[1],text_b=line[2], label=line[0]))
+                examples.append(InputExample(guid=guid, text_a=line[2],short_text=line[1], label=line[0]))
             elif self.task_name in ['my-ar-sa']:
                 examples.append(InputExample(guid=guid, text_a=line[1], label=line[0]))
             else:
