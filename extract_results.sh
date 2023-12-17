@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Specify the file name
-file_name="log.txt"
+file_name="log"
 output_file="results.csv"
 dataset=$1
 
