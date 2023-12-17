@@ -78,9 +78,6 @@ def tokenize_multipart_input(
     attention_mask = []
     token_type_ids = [] # Only for BERT
     mask_pos = None # Position of the mask token
-    
-    print(input_text_list)
-    print(template)
 
     if prompt:
         """
