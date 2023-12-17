@@ -103,8 +103,10 @@ case $TASK in
         MAPPING="{'O': 'آخر', 'LOC': 'موقع', 'ORG': 'منظمة', 'PERS': 'شخص', 'MISC': 'متنوع'}"
         ;;
     my-ar-sa)
-        TEMPLATE=*cls**sent_0*_It_was*mask*.*sep+*
+        TEMPLATE=*cls**sent_0*كانت**mask*.*sep+*
         MAPPING="{'pos':'جيد','neg':'سيء'}"
+        TASK_EXTRA="--first_sent_limit 110  --double_demo --other_sent_limit 60"
+
         ;;
 
 esac
