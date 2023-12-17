@@ -108,6 +108,7 @@ def tokenize_multipart_input(
         template_list = template.split('*') # Get variable list in the template
         segment_id = 0 # Current segment id. Segment id +1 if encountering sep+.
 
+        print("Template List:",template_list)
         for part_id, part in enumerate(template_list):
             new_tokens = []
             segment_plus_1_flag = False
