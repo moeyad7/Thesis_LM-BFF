@@ -108,7 +108,6 @@ def tokenize_multipart_input(
         template_list = template.split('*') # Get variable list in the template
         segment_id = 0 # Current segment id. Segment id +1 if encountering sep+.
 
-        print("Template List:",template_list)
         for part_id, part in enumerate(template_list):
             new_tokens = []
             segment_plus_1_flag = False
@@ -243,7 +242,7 @@ def tokenize_multipart_input(
 
     # Find mask token
     if prompt:
-        print(tokenizer.decode(input_ids))
+        # print(tokenizer.decode(input_ids))
         mask_pos = [input_ids.index(tokenizer.mask_token_id)]
         # Make sure that the masked position is inside the max_length
         assert mask_pos[0] < max_length
