@@ -104,7 +104,7 @@ case $TASK in
         ;;
     my-ar-sa)
         TEMPLATE=*cls**sent_0*_It_was*mask*.*sep+*
-        MAPPING="{'pos':'good','neg':'bad'}"
+        MAPPING="{'pos':'جيد','neg':'سيء'}"
         ;;
 
 esac
