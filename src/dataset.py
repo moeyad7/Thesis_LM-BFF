@@ -456,9 +456,6 @@ class FewShotDataset(torch.utils.data.Dataset):
                 else:
                     template = args.template
                     
-                print(example.text_a) # debug
-                print(example.text_b) # debug
-                print(example.label) # debug
 
                 self.features.append(self.convert_fn(
                     example=example,
@@ -637,10 +634,6 @@ class FewShotDataset(torch.utils.data.Dataset):
                 for label_id in range(len(label_map)):
                     augmented_example += support_by_label[label_id]
                     
-            print("Prompt:" ,prompt)
-            print("Template:", template)
-            print("Label word list:", label_word_list)
-            print("Augmented example:", augmented_example)
             # Tokenization (based on the template)
             inputs = tokenize_multipart_input(
                 input_text_list=augmented_example,
