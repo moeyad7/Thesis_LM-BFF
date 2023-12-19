@@ -141,7 +141,7 @@ cython_debug/
 .csv
 .venv
 .vscode
-# data
+data
 !data/k-shot/checksum
 log*
 runs
