@@ -15,6 +15,6 @@ do
         cp data/k-shot/$task/$K-42/test_sbert-$MODEL.npy  data/k-shot/$task/$K-$seed/
     done
 
-    cp data/k-shot/MNLI/$K-42/test_matched_sbert-$MODEL.npy  data/k-shot/MNLI/$K-$seed/
-    cp data/k-shot/MNLI/$K-42/test_mismatched_sbert-$MODEL.npy  data/k-shot/MNLI/$K-$seed/
+    # cp data/k-shot/MNLI/$K-42/test_matched_sbert-$MODEL.npy  data/k-shot/MNLI/$K-$seed/
+    # cp data/k-shot/MNLI/$K-42/test_mismatched_sbert-$MODEL.npy  data/k-shot/MNLI/$K-$seed/
 done
