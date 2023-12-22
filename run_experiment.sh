@@ -95,7 +95,7 @@ case $TASK in
         ;;
     ar-en-sa)
         TEMPLATE=*cls**sent_0*_It_was*mask*.*sep+*
-        MAPPING="{'positive':'good','negative':'bad','neutral':'neutral'}"
+        MAPPING="{'positive':'جيد','negative':'سيء','neutral':'ربما'}"
         TASK_EXTRA="--first_sent_limit 512  --double_demo"
         ;;
     ar-ner-corp)

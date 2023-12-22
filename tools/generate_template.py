@@ -287,9 +287,9 @@ def search_template(model, tokenizer, task_name, k, seed, beam, output_dir, data
         'SNLI': {'contradiction':'No','entailment':'Yes','neutral':'Maybe'},
         'QNLI': {'not_entailment':'No','entailment':'Yes'},
         'RTE': {'not_entailment':'No','entailment':'Yes'},
-        'ar-en-sa': {'positive':'good','negative':'bad','neutral':'neutral'},
-        'ar-ner-corp':{'O':'other','LOC':'location','ORG':'organization','PERS':'person','MISC':'diverse'},
-        'my-ar-sa':{'pos':'good','neg':'bad'},
+        'ar-en-sa': {'positive':'جيد','negative':'سيء','neutral':'ربما'},
+        'ar-ner-corp':{'O': 'آخر', 'LOC': 'موقع', 'ORG': 'منظمة', 'PERS': 'شخص', 'MISC': 'متنوع'},
+        'my-ar-sa':{'pos':'جيد','neg':'سيء'},
     }
 
     mapping = map_of_mapping[task_name]
