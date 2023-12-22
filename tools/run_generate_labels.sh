@@ -29,9 +29,9 @@ K_NEIGHBORS=30
 # How many label mappings per template to keep at the end.
 N_PAIRS=100
 
-TASKS="SST-2"
+TASKS=$1
 
-SEEDS="100 13 21 42 87"
+SEEDS="13 21 42"
 
 TASK_EXTRA=""
 
