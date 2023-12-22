@@ -110,7 +110,7 @@ for TASK in $TASKS; do
             ar-en-sa)
                 TEMPLATE=*cls**sent_0*_It_was*mask*.*sep+*
                 MAPPING="{'positive':'جيد','negative':'سيء','neutral':'ربما'}"
-                TASK_EXTRA="--first_sent_limit 512  --double_demo"
+                TASK_EXTRA="--first_sent_limit 512"
                 ;;
             ar-ner-corp)
                 TEMPLATE=*cls**mask*_إنها*sent_0*.*sep+*
@@ -119,7 +119,7 @@ for TASK in $TASKS; do
             my-ar-sa)
                 TEMPLATE=*cls**sent_0*كانت**mask*.*sep+*
                 MAPPING="{'pos':'جيد','neg':'سيء'}"
-                TASK_EXTRA="--first_sent_limit 110  --double_demo --other_sent_limit 60"
+                TASK_EXTRA="--first_sent_limit 110 --other_sent_limit 60"
                 ;;
         esac
 
