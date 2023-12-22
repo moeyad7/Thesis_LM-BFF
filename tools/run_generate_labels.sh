@@ -107,12 +107,26 @@ for TASK in $TASKS; do
                 MAPPING="{0:'terrible',1:'great'}"
                 TASK_EXTRA="--first_sent_limit 110"
                 ;;
+            ar-en-sa)
+                TEMPLATE=*cls**sent_0*_It_was*mask*.*sep+*
+                MAPPING="{'positive':'جيد','negative':'سيء','neutral':'ربما'}"
+                TASK_EXTRA="--first_sent_limit 512  --double_demo"
+                ;;
+            ar-ner-corp)
+                TEMPLATE=*cls**mask*_إنها*sent_0*.*sep+*
+                MAPPING="{'O': 'آخر', 'LOC': 'موقع', 'ORG': 'منظمة', 'PERS': 'شخص', 'MISC': 'متنوع'}"
+                ;;
+            my-ar-sa)
+                TEMPLATE=*cls**sent_0*كانت**mask*.*sep+*
+                MAPPING="{'pos':'جيد','neg':'سيء'}"
+                TASK_EXTRA="--first_sent_limit 110  --double_demo --other_sent_limit 60"
+                ;;
         esac
 
         if [[ $LOAD_TEMPLATES = "true" ]]; then
             FILENAME=$TEMPLATE_DIR/${TASK}/$K-${SEED}.sort.txt
             for TEMPLATE in $(head -n $NUM_TEMPLATES $FILENAME); do
-                python tools/generate_labels.py \
+                python3 tools/generate_labels.py \
                        --overwrite_output_dir \
                        --output_dir /tmp/output \
                        --model_name_or_path $MODEL_NAME \
@@ -131,7 +145,7 @@ for TASK in $TASKS; do
                        $TASK_EXTRA
             done
         else
-            python tools/generate_labels.py \
+            python3 tools/generate_labels.py \
                    --overwrite_output_dir \
                    --output_dir /tmp/output \
                    --model_name_or_path $MODEL_NAME \

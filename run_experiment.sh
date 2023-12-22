@@ -106,7 +106,6 @@ case $TASK in
         TEMPLATE=*cls**sent_0*كانت**mask*.*sep+*
         MAPPING="{'pos':'جيد','neg':'سيء'}"
         TASK_EXTRA="--first_sent_limit 110  --double_demo --other_sent_limit 60"
-
         ;;
 
 esac
