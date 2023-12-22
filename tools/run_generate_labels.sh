@@ -10,7 +10,7 @@ DATA_DIR="data/k-shot"
 OUTPUT_DIR="my_auto_label_mapping"
 
 # Pre-trained model name (roberta-*, bert-*), see Transformers.
-MODEL_NAME="roberta-large"
+MODEL_NAME=$2
 
 # For auto T + L, we first generate automatic templates. Then, for each template, we
 # generate automatic labels. Finally we will train all auto template X auto labels and
