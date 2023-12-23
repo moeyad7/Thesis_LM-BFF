@@ -140,7 +140,6 @@ def main():
     data_args.gpt3_in_context_head = False
     data_args.gpt3_in_context_tail = False
     
-    print(model_args.random_segment)
 
     # Setup logging
     logging.basicConfig(
@@ -209,6 +208,8 @@ def main():
         config=config,
         cache_dir=model_args.cache_dir,
     )
+    
+    print(model_args.random_segment)
 
     # For BERT, increase the size of the segment (token type) embeddings
     if config.model_type == 'bert':
