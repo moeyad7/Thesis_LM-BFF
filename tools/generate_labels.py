@@ -213,7 +213,7 @@ def main():
     if config.model_type == 'bert':
         model.resize_token_embeddings(len(tokenizer))
         # resize_token_type_embeddings(model, new_num_types=10, random_segment=model_args.random_segment)
-        resize_token_type_embeddings(model, new_num_types=10, random_segment=False)
+        resize_token_type_embeddings(model, new_num_types=10, random_segment=True)
         
 
     # Pass dataset and argument information to the model
