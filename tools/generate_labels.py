@@ -139,6 +139,8 @@ def main():
     data_args.template_list = None
     data_args.gpt3_in_context_head = False
     data_args.gpt3_in_context_tail = False
+    
+    print(model_args.random_segment)
 
     # Setup logging
     logging.basicConfig(
