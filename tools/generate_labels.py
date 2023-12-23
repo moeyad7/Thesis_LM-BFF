@@ -41,6 +41,12 @@ class ModelArguments:
     cache_dir: Optional[str] = field(
         default=None, metadata={"help": "Where do you want to store the pretrained models downloaded from s3"}
     )
+    
+    # Only for BERT-type model
+    random_segment: bool = field(
+        default=False,
+        metadata={"help": "Whether to reinitialize the token type embeddings (only for BERT)."}
+    )
 
 
 @dataclass
