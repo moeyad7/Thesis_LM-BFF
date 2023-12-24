@@ -182,7 +182,6 @@ class Trainer(transformers.Trainer):
         are fixed and only the top layers are further fine-tuned.
         """
         if self.optimizer is None:
-            print("I am at line 185 trainer.py")
             params = {}
             for n, p in self.model.named_parameters():
                 if self.args.fix_layers > 0:
@@ -231,7 +230,6 @@ class Trainer(transformers.Trainer):
                 eps=self.args.adam_epsilon,
             )
         if self.lr_scheduler is None:
-            print("I am at line 234 trainer.py")
             self.lr_scheduler = get_linear_schedule_with_warmup(
                 self.optimizer, num_warmup_steps=self.args.warmup_steps, num_training_steps=num_training_steps
             )
@@ -251,16 +249,13 @@ class Trainer(transformers.Trainer):
         train_dataloader = self.get_train_dataloader()
         num_update_steps_per_epoch = len(train_dataloader) // self.args.gradient_accumulation_steps 
         if num_update_steps_per_epoch == 0:
-            print("I am at line 254 trainer.py")
             num_update_steps_per_epoch = 1
         if self.args.max_steps > 0:
-            print("I am at line 257 trainer.py")
             t_total = self.args.max_steps
             num_train_epochs = self.args.max_steps // num_update_steps_per_epoch + int(
                 self.args.max_steps % num_update_steps_per_epoch > 0
             )
         else:
-            print("I am at line 263 trainer.py")
             t_total = int(len(train_dataloader) // self.args.gradient_accumulation_steps * self.args.num_train_epochs)
             num_train_epochs = self.args.num_train_epochs
 
@@ -274,7 +269,6 @@ class Trainer(transformers.Trainer):
             and os.path.isfile(os.path.join(model_path, "optimizer.pt"))
             and os.path.isfile(os.path.join(model_path, "scheduler.pt"))
         ):
-            print("I am at line 277 trainer.py")
             # Load in optimizer and scheduler states
             optimizer.load_state_dict(
                 torch.load(os.path.join(model_path, "optimizer.pt"), map_location=self.args.device)
@@ -284,19 +278,16 @@ class Trainer(transformers.Trainer):
         model = self.model
 
         if self.args.fp16 and _use_apex:
-            print("I am at line 287 trainer.py")
             if not transformers.is_apex_available():
                 raise ImportError("Please install apex from https://www.github.com/nvidia/apex to use fp16 training.")
             model, optimizer = amp.initialize(model, optimizer, opt_level=self.args.fp16_opt_level)
 
         # Multi-gpu training (should be after apex fp16 initialization)
         if self.args.n_gpu > 1:
-            print("I am at line 294 trainer.py")
             model = torch.nn.DataParallel(model)
 
         # Distributed training (should be after apex fp16 initialization)
         if self.args.local_rank != -1:
-            print("I am at line 299 trainer.py")
             model = torch.nn.parallel.DistributedDataParallel(
                 model,
                 device_ids=[self.args.local_rank],
@@ -306,10 +297,8 @@ class Trainer(transformers.Trainer):
 
         # Train
         if transformers.is_torch_tpu_available():
-            print("I am at line 309 trainer.py")
             total_train_batch_size = self.args.train_batch_size * xm.xrt_world_size()
         else:
-            print("I am at line 312 trainer.py")
             total_train_batch_size = (
                 self.args.train_batch_size
                 * self.args.gradient_accumulation_steps
@@ -329,10 +318,8 @@ class Trainer(transformers.Trainer):
         steps_trained_in_current_epoch = 0
         # Check if continuing training from a checkpoint
         if model_path is not None:
-            print("I am at line 332 trainer.py")
             # set global_step to global_step of last saved checkpoint from model path
             try:
-                print("I am at line 335 trainer.py")
                 self.global_step = int(model_path.split("-")[-1].split("/")[0])
                 epochs_trained = self.global_step // (len(train_dataloader) // self.args.gradient_accumulation_steps)
                 steps_trained_in_current_epoch = self.global_step % (
@@ -344,7 +331,6 @@ class Trainer(transformers.Trainer):
                 logger.info("  Continuing training from global step %d", self.global_step)
                 logger.info("  Will skip the first %d steps in the first epoch", steps_trained_in_current_epoch)
             except ValueError:
-                print("I am at line 347 trainer.py")
                 self.global_step = 0
                 logger.info("  Starting fine-tuning.")
 
@@ -356,29 +342,24 @@ class Trainer(transformers.Trainer):
         )
         for epoch in train_iterator:
             if isinstance(train_dataloader, DataLoader) and isinstance(train_dataloader.sampler, DistributedSampler):
-                print("I am at line 359 trainer.py")
                 train_dataloader.sampler.set_epoch(epoch)
 
             if transformers.is_torch_tpu_available():
-                print("I am at line 363 trainer.py")
                 parallel_loader = pl.ParallelLoader(train_dataloader, [self.args.device]).per_device_loader(
                     self.args.device
                 )
                 epoch_iterator = tqdm(parallel_loader, desc="Iteration", disable=not self.is_local_master())
             else:
-                print("I am at line 369 trainer.py")
                 epoch_iterator = tqdm(train_dataloader, desc="Iteration", disable=True)
 
             # Reset the past mems state at the beginning of each epoch if necessary.
             if self.args.past_index >= 0:
-                print("I am at line 374 trainer.py")
                 self._past = None
 
             for step, inputs in enumerate(epoch_iterator):
 
                 # Skip past any already trained steps if resuming training
                 if steps_trained_in_current_epoch > 0:
-                    print("I am at line 381 trainer.py")
                     steps_trained_in_current_epoch -= 1
                     continue
 
@@ -389,28 +370,21 @@ class Trainer(transformers.Trainer):
                     len(epoch_iterator) <= self.args.gradient_accumulation_steps
                     and (step + 1) == len(epoch_iterator)
                 ):
-                    print("I am at line 392 trainer.py")
                     
                     if self.args.fp16 and _use_native_amp:
-                        print("I am at line 395 trainer.py")
                         self.scaler.unscale_(optimizer)
                         norm = torch.nn.utils.clip_grad_norm_(model.parameters(), self.args.max_grad_norm)
                     elif self.args.fp16:
-                        print("I am at line 399 trainer.py")
                         norm = torch.nn.utils.clip_grad_norm_(amp.master_params(optimizer), self.args.max_grad_norm)
                     else:
-                        print("I am at line 402 trainer.py")
                         norm = torch.nn.utils.clip_grad_norm_(model.parameters(), self.args.max_grad_norm)
 
                     if transformers.is_torch_tpu_available():
-                        print("I am at line 406 trainer.py")
                         xm.optimizer_step(optimizer)
                     elif self.args.fp16 and _use_native_amp:
-                        print("I am at line 409 trainer.py")
                         self.scaler.step(optimizer)
                         self.scaler.update()
                     else:
-                        print("I am at line 413 trainer.py")
                         optimizer.step()
 
                     scheduler.step()
@@ -421,7 +395,6 @@ class Trainer(transformers.Trainer):
                     if (self.args.logging_steps > 0 and self.global_step % self.args.logging_steps == 0) or (
                         self.global_step == 1 and self.args.logging_first_step
                     ):
-                        print("I am at line 424 trainer.py")
                         logs = {}
                         tr_loss_scalar = tr_loss.item()
                         logs["loss"] = (tr_loss_scalar - logging_loss_scalar) / self.args.logging_steps
@@ -442,12 +415,10 @@ class Trainer(transformers.Trainer):
 
                     metrics = None
                     if self.args.evaluate_during_training and self.global_step % self.args.eval_steps == 0:
-                        print("I am at line 445 trainer.py")
                         output = self.evaluate()
                         metrics = output.metrics
                         objective = self.dev_objective(metrics)
                         if objective > self.objective:
-                            print("I am at line 450 trainer.py")
                             logger.info("Best dev result: {}".format(objective))
                             self.objective = objective
                             self.save_model(self.args.output_dir) 
@@ -458,20 +429,16 @@ class Trainer(transformers.Trainer):
 
 
                 if self.args.max_steps > 0 and self.global_step > self.args.max_steps:
-                    print("I am at line 461 trainer.py")
                     epoch_iterator.close()
                     break
             if self.args.max_steps > 0 and self.global_step > self.args.max_steps:
-                print("I am at line 465 trainer.py")
                 train_iterator.close()
                 break
             if self.args.tpu_metrics_debug or self.args.debug:
-                print("I am at line 469 trainer.py")
                 # tpu-comment: Logging debug metrics for PyTorch/XLA (compile, execute times, ops, etc.)
                 xm.master_print(met.metrics_report())
 
         if self.args.past_index and hasattr(self, "_past"):
-            print("I am at line 474 trainer.py")
             # Clean the state at the end of training
             delattr(self, "_past")
 
@@ -501,7 +468,6 @@ class Trainer(transformers.Trainer):
             A dictionary containing the evaluation loss and the potential metrics computed from the predictions.
         """
         if eval_dataset is not None and not isinstance(eval_dataset, collections.abc.Sized):
-            print("I am at line 504 trainer.py")
             raise ValueError("eval_dataset must implement __len__")
 
         eval_dataloader = self.get_eval_dataloader(eval_dataset)
@@ -511,7 +477,6 @@ class Trainer(transformers.Trainer):
         self.log(output.metrics)
 
         if self.args.tpu_metrics_debug or self.args.debug:
-            print("I am at line 514 trainer.py")
             # tpu-comment: Logging debug metrics for PyTorch/XLA (compile, execute times, ops, etc.)
             xm.master_print(met.metrics_report())
 
