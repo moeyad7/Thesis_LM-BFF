@@ -184,6 +184,8 @@ def main():
     seed_result = {}
     seed_best = {}
     
+    print(result_list)
+    
     # Gather all logs satisfying the conditions
     for item in result_list:
         ok = True
