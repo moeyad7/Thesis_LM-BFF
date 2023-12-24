@@ -119,13 +119,11 @@ def tokenize_multipart_input(
                 if part == 'sep+':
                     segment_plus_1_flag = True
             elif part[:6] == 'label_':
-                print("I am at line 133 dataset.py")
                 # Note that label_word_list already has extra space, so do not add more space ahead of it.
                 label_id = int(part.split('_')[1])
                 label_word = label_word_list[label_id]
                 new_tokens.append(label_word)
             elif part[:7] == 'labelx_':
-                print("I am at line 139 dataset.py")
                 instance_id = int(part.split('_')[1])
                 label_id = support_labels[instance_id]
                 label_word = label_word_list[label_id]
@@ -251,7 +249,6 @@ def tokenize_multipart_input(
 
     result = {'input_ids': input_ids, 'attention_mask': attention_mask}
     if 'BERT' in type(tokenizer).__name__:
-        print("I am at line 292 dataset.py")
         # Only provide token type ids for BERT
         result['token_type_ids'] = token_type_ids
 
@@ -315,7 +312,6 @@ class FewShotDataset(torch.utils.data.Dataset):
 
         # If we use multiple templates, we also need to do multiple sampling during inference.
         if args.prompt and args.template_list is not None:
-            print("I am at line 366 dataset.py")
             logger.info("There are %d templates. Multiply num_sample by %d" % (len(args.template_list), len(args.template_list)))
             self.num_sample *= len(args.template_list)
                 
