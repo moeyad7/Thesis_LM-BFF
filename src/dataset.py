@@ -112,14 +112,11 @@ def tokenize_multipart_input(
             new_tokens = []
             segment_plus_1_flag = False
             if part in special_token_mapping:
-                print("I am at line 123 dataset.py")
                 if part == 'cls' and 'T5' in type(tokenizer).__name__:
-                    print("I am at line 125 dataset.py")
                     # T5 does not have cls token
                     continue
                 new_tokens.append(special_token_mapping[part])
                 if part == 'sep+':
-                    print("I am at line 130 dataset.py")
                     segment_plus_1_flag = True
             elif part[:6] == 'label_':
                 print("I am at line 133 dataset.py")
@@ -214,10 +211,8 @@ def tokenize_multipart_input(
             token_type_ids += [segment_id for i in range(len(new_tokens))]
 
             if segment_plus_1_flag:
-                print("I am at line 225 dataset.py")
                 segment_id += 1
     else:
-        print("I am at line 228 dataset.py")
         input_ids = [tokenizer.cls_token_id]
         attention_mask = [1]
         token_type_ids = [0]
