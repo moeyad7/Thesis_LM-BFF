@@ -78,7 +78,6 @@ def tokenize_multipart_input(
     support_labels=None,
 ):
     def enc(text):
-        print("I am at line 81 dataset.py")
         return tokenizer.encode(text, add_special_tokens=False)
 
     input_ids = []
@@ -232,7 +231,6 @@ def tokenize_multipart_input(
 
         for sent_id, input_text in enumerate(input_text_list):
             if input_text is None:
-                print("I am at line 235 dataset.py")
                 # Do not have text_b
                 continue
             if pd.isna(input_text) or input_text is None:
@@ -293,7 +291,6 @@ def tokenize_multipart_input(
         result['token_type_ids'] = token_type_ids
 
     if prompt:
-        print("I am at line 297 dataset.py")
         result['mask_pos'] = mask_pos
 
     return result
@@ -572,15 +569,12 @@ class FewShotDataset(torch.utils.data.Dataset):
             for i in order:
                 label = context_examples[i].label
                 if len(self.label_list) == 1:
-                    print("I am at line 576 dataset.py")
                     # Regression
                     label = '0' if float(label) <= median_mapping[self.args.task_name] else '1'
                 if counts[label] < max_demo_per_label:
-                    print("I am at line 580 dataset.py")
                     selection.append(context_examples[i])
                     counts[label] += 1
                 if sum(counts.values()) == len(counts) * max_demo_per_label:
-                    print("I am at line 584 dataset.py")
                     break
         
             assert len(selection) > 0
