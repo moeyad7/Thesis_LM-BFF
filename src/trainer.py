@@ -185,32 +185,23 @@ class Trainer(transformers.Trainer):
             params = {}
             for n, p in self.model.named_parameters():
                 if self.args.fix_layers > 0:
-                    print("I am at line 189 trainer.py")
                     if 'encoder.layer' in n:
-                        print("I am at line 191 trainer.py")
                         try:
-                            print("I am at line 193 trainer.py")
                             layer_num = int(n[n.find('encoder.layer') + 14:].split('.')[0])
                         except:
-                            print("I am at line 196 trainer.py")
                             print(n)
                             raise Exception("")
                         if layer_num >= self.args.fix_layers:
-                            print("I am at line 200 trainer.py")
                             print('yes', n)
                             params[n] = p
                         else:
-                            print("I am at line 204 trainer.py")
                             print('no ', n)
                     elif 'embeddings' in n:
-                        print("I am at line 207 trainer.py")
                         print('no ', n)
                     else:
-                        print("I am at line 210 trainer.py")
                         print('yes', n)
                         params[n] = p
                 else:
-                    print("I am at line 214 trainer.py")
                     params[n] = p
             no_decay = ["bias", "LayerNorm.weight"]
             optimizer_grouped_parameters = [
