@@ -184,7 +184,6 @@ def main():
     seed_result = {}
     seed_best = {}
     
-    print(result_list)
     
     # Gather all logs satisfying the conditions
     for item in result_list:
@@ -194,7 +193,8 @@ def main():
                 if cond not in item or item[cond] != 'mnli':
                    ok = False
                    break
-            else: 
+            else:
+                print(cond, condition[cond], item[cond]) 
                 if cond not in item or item[cond] != condition[cond]:
                     ok = False
                     break
