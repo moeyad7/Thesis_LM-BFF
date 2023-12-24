@@ -14,15 +14,18 @@ def resize_token_type_embeddings(model, new_num_types: int, random_segment: bool
     Resize the segment (token type) embeddings for BERT
     """
     if hasattr(model, 'bert'):
+        print("I am at line 17 models.py")
         old_token_type_embeddings = model.bert.embeddings.token_type_embeddings
     else:
         raise NotImplementedError
     new_token_type_embeddings = nn.Embedding(new_num_types, old_token_type_embeddings.weight.size(1))
     if not random_segment:
+        print("I am at line 23 models.py")
         new_token_type_embeddings.weight.data[:old_token_type_embeddings.weight.size(0)] = old_token_type_embeddings.weight.data
 
     model.config.type_vocab_size = new_num_types
     if hasattr(model, 'bert'):
+        print("I am at line 28 models.py")
         model.bert.embeddings.token_type_embeddings = new_token_type_embeddings
     else:
         raise NotImplementedError
@@ -60,6 +63,7 @@ class BertForPromptFinetuning(BertPreTrainedModel):
         batch_size = input_ids.size(0)
 
         if mask_pos is not None:
+            print("I am at line 66 models.py")
             mask_pos = mask_pos.squeeze()
 
         # Encode everything
@@ -78,7 +82,9 @@ class BertForPromptFinetuning(BertPreTrainedModel):
 
         # Exit early and only return mask logits.
         if self.return_full_softmax:
+            print("I am at line 85 models.py")
             if labels is not None:
+                print("I am at line 87 models.py")
                 return torch.zeros(1, out=prediction_mask_scores.new()), prediction_mask_scores
             return prediction_mask_scores
 
@@ -90,22 +96,27 @@ class BertForPromptFinetuning(BertPreTrainedModel):
 
         # Regression task
         if self.config.num_labels == 1:
+            print("I am at line 99 models.py")
             logsoftmax = nn.LogSoftmax(-1)
             logits = logsoftmax(logits) # Log prob of right polarity
 
         loss = None
         if labels is not None:
+            print("I am at line 105 models.py")
             if self.num_labels == 1:
+                print("I am at line 107 models.py")
                 # Regression task
                 loss_fct = nn.KLDivLoss(log_target=True)
                 labels = torch.stack([1 - (labels.view(-1) - self.lb) / (self.ub - self.lb), (labels.view(-1) - self.lb) / (self.ub - self.lb)], -1)
                 loss = loss_fct(logits.view(-1, 2), labels)
             else:
+                print("I am at line 113 models.py")
                 loss_fct = nn.CrossEntropyLoss()
                 loss = loss_fct(logits.view(-1, logits.size(-1)), labels.view(-1))
 
         output = (logits,)
         if self.num_labels == 1:
+            print("I am at line 119 models.py")
             # Regression output
             output = (torch.exp(logits[..., 1].unsqueeze(-1)) * (self.ub - self.lb) + self.lb,)
         return ((loss,) + output) if loss is not None else output

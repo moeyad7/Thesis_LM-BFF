@@ -263,10 +263,12 @@ def main():
     parser = HfArgumentParser((ModelArguments, DynamicDataTrainingArguments, DynamicTrainingArguments))
 
     if len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
+        print("I am at line 266 run.py")
         # If we pass only one argument to the script and it's the path to a json file,
         # let's parse it to get our arguments.
         model_args, data_args, training_args = parser.parse_json_file(json_file=os.path.abspath(sys.argv[1]))
     else:
+        print("I am at line 271 run.py")
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
     if 'prompt' in model_args.few_shot_type:
@@ -286,7 +288,9 @@ def main():
 
     # Load prompt/template/mapping file
     if data_args.prompt:
+        print("I am at line 291 run.py")
         if data_args.prompt_path is not None:
+            print("I am at line 293 run.py")
             assert data_args.prompt_id is not None
             prompt_list = []
             with open(data_args.prompt_path) as f:
@@ -298,6 +302,7 @@ def main():
             data_args.template, data_args.mapping = prompt_list[data_args.prompt_id] 
             logger.info("Specify load the %d-th prompt: %s | %s" % (data_args.prompt_id, data_args.template, data_args.mapping))
         else:
+            print("I am at line 305 run.py")
             if data_args.template_path is not None:
                 with open(data_args.template_path) as f:
                     data_args.template_list = []
@@ -308,16 +313,19 @@ def main():
 
                 # Load top-n templates
                 if data_args.top_n_template is not None:
+                    print("I am at line 316 run.py")
                     data_args.template_list = data_args.template_list[:data_args.top_n_template]
                 logger.info("Load top-%d templates from %s" % (len(data_args.template_list), data_args.template_path))
 
                 # ... or load i-th template
                 if data_args.template_id is not None:
+                    print("I am at line 322 run.py")
                     data_args.template = data_args.template_list[data_args.template_id]
                     data_args.template_list = None
                     logger.info("Specify load the %d-th template: %s" % (data_args.template_id, data_args.template))
 
             if data_args.mapping_path is not None:
+                print("I am at line 328 run.py")
                 assert data_args.mapping_id is not None # Only can use one label word mapping
                 with open(data_args.mapping_path) as f:
                     mapping_list = []
@@ -349,7 +357,7 @@ def main():
 
     # Set seed
     set_seed(training_args.seed)
-
+    print("I am at line 360 run.py")
     try:
         num_labels = num_labels_mapping[data_args.task_name]
         output_mode = output_modes_mapping[data_args.task_name]
@@ -359,8 +367,10 @@ def main():
 
     # Automatically generate template for using demonstrations
     if data_args.auto_demo and model_args.few_shot_type == 'prompt-demo':
+        print("I am at line 370 run.py")
         # GPT-3's in-context learning
         if data_args.gpt3_in_context_head or data_args.gpt3_in_context_tail: 
+            print("I am at line 373 run.py")
             logger.info("Automatically convert the template to GPT-3's in-context learning.")
             assert data_args.template_list is None
 
@@ -370,6 +380,7 @@ def main():
             # Single sentence or sentence pair?
             sent_num = 1
             if "_1" in old_template:
+                print("I am at line 383 run.py")
                 sent_num = 2
             for instance_id in range(data_args.gpt3_in_context_num):
                 sub_template = old_template + ''
@@ -379,14 +390,18 @@ def main():
                 # Replace mask
                 sub_template = sub_template.replace("*mask*", "*labelx_{}*".format(instance_id))
                 if data_args.gpt3_in_context_tail:
+                    print("I am at line 393 run.py")
                     new_template = new_template + sub_template # Put context at the end
                 else:
+                    print("I am at line 396 run.py")
                     new_template = sub_template + new_template # Put context at the beginning
             logger.info("| {} => {}".format(data_args.template, new_template))
             data_args.template = new_template
         else:
+            print("I am at line 401 run.py")
             logger.info("Automatically convert the template to using demonstrations.")
             if data_args.template_list is not None:
+                print("I am at line 404 run.py")
                 for i in range(len(data_args.template_list)):
                     old_template = data_args.template_list[i]
                     new_template = old_template + ''
@@ -394,6 +409,7 @@ def main():
                     # Single sentence or sentence pair?
                     sent_num = 1
                     if "_1" in old_template:
+                        print("I am at line 412 run.py")
                         sent_num = 2
                     for label_id in range(num_labels):
                         sub_template = old_template + ''
@@ -406,12 +422,14 @@ def main():
                     logger.info("| {} => {}".format(data_args.template_list[i], new_template))
                     data_args.template_list[i] = new_template
             else:
+                print("I am at line 425 run.py")
                 old_template = data_args.template
                 new_template = old_template + ''
                 old_template = old_template.replace('*cls*', '')
                 # Single sentence or sentence pair?
                 sent_num = 1
                 if "_1" in old_template:
+                    print("I am at line 432 run.py")
                     sent_num = 2
                 for label_id in range(num_labels):
                     sub_template = old_template + ''
@@ -477,15 +495,17 @@ def main():
     )
 
     # For BERT, increase the size of the segment (token type) embeddings
-    print("Random Segment",model_args.random_segment)
     if config.model_type == 'bert':
+        print("I am at line 499 run.py")
         model.resize_token_embeddings(len(tokenizer))
         resize_token_type_embeddings(model, new_num_types=10, random_segment=model_args.random_segment)
 
     # Pass dataset and argument information to the model
     if data_args.prompt:
+        print("I am at line 505 run.py")
         model.label_word_list = torch.tensor(train_dataset.label_word_list).long().cuda()
     if output_modes_mapping[data_args.task_name] == 'regression':
+        print("I am at line 508 run.py")
         # lower / upper bounds
         model.lb, model.ub = bound_mapping[data_args.task_name]
     model.model_args = model_args
@@ -503,8 +523,10 @@ def main():
             logits = logits.mean(axis=0)
             
             if num_logits == 1:
+                print("I am at line 526 run.py")
                 preds = np.squeeze(logits)
             else:
+                print("I am at line 529 run.py")
                 preds = np.argmax(logits, axis=1)
 
             # Just for sanity, assert label ids are the same.
@@ -529,12 +551,15 @@ def main():
 
     # Training
     if training_args.do_train:
+        print("I am at line 554 run.py")
         trainer.train(model_path=model_args.model_name_or_path if os.path.isdir(model_args.model_name_or_path) else None)
         # Use the early stop, so do not save the model in the end (unless specify save_at_last)
         if training_args.save_at_last:
+            print("I am at line 558 run.py")
             trainer.save_model(training_args.output_dir)
  
         if trainer.is_world_master():
+            print("I am at line 562 run.py")
             tokenizer.save_pretrained(training_args.output_dir)
             torch.save(model_args, os.path.join(training_args.output_dir, "model_args.bin"))
             torch.save(data_args, os.path.join(training_args.output_dir, "data_args.bin"))
@@ -544,8 +569,10 @@ def main():
         model = model.to(training_args.device)
         trainer.model = model
         if data_args.prompt:
+            print("I am at line 572 run.py")
             model.label_word_list = torch.tensor(train_dataset.label_word_list).long().cuda()
         if output_modes_mapping[data_args.task_name] == 'regression':
+            print("I am at line 575 run.py")
             # lower / upper bounds
             model.lb, model.ub = bound_mapping[data_args.task_name]
         model.model_args = model_args
@@ -572,6 +599,7 @@ def main():
                 training_args.output_dir, f"eval_results_{eval_dataset.args.task_name}.txt"
             )
             if trainer.is_world_master():
+                print("I am at line 602 run.py")
                 with open(output_eval_file, "w") as writer:
                     logger.info("***** Eval results {} *****".format(eval_dataset.args.task_name))
                     for key, value in eval_result.items():
@@ -582,6 +610,7 @@ def main():
 
     test_results = {}
     if training_args.do_predict:
+        print("I am at line 613 run.py")
         logging.info("*** Test ***")
         test_datasets = [test_dataset]
         if data_args.task_name == "mnli":
@@ -599,6 +628,7 @@ def main():
                 training_args.output_dir, f"test_results_{test_dataset.args.task_name}.txt"
             )
             if trainer.is_world_master():
+                print("I am at line 631 run.py")
                 with open(output_test_file, "w") as writer:
                     logger.info("***** Test results {} *****".format(test_dataset.args.task_name))
                     for key, value in test_result.items():
@@ -607,6 +637,7 @@ def main():
                         final_result[test_dataset.args.task_name + '_test_' + key] = value
 
                 if training_args.save_logit:
+                    print("I am at line 640 run.py")
                     predictions = output.predictions
                     num_logits = predictions.shape[-1]
                     logits = predictions.reshape([test_dataset.num_sample, -1, num_logits]).mean(axis=0)
