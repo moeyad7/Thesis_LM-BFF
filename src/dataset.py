@@ -288,24 +288,20 @@ class FewShotDataset(torch.utils.data.Dataset):
             for key in self.label_to_word:
                 # For RoBERTa/BART/T5, tokenization also considers space, so we use space+word as label words.
                 if self.label_to_word[key][0] not in ['<', '[', '.', ',']:
-                    print("I am at line 332 dataset.py")
                     # Make sure space+word is in the vocabulary
                     assert len(tokenizer.tokenize(' ' + self.label_to_word[key])) == 1
                     self.label_to_word[key] = tokenizer._convert_token_to_id(tokenizer.tokenize(' ' + self.label_to_word[key])[0])
                 else:
-                    print("I am at line 337 dataset.py")
                     self.label_to_word[key] = tokenizer._convert_token_to_id(self.label_to_word[key])
                 logger.info("Label {} to word {} ({})".format(key, tokenizer._convert_id_to_token(self.label_to_word[key]), self.label_to_word[key]))
             
             if len(self.label_list) > 1:
-                print("I am at line 342 dataset.py")
                 self.label_word_list = [self.label_to_word[label] for label in self.label_list]
             else:
                 # Regression task
                 # '0' represents low polarity and '1' represents high polarity.
                 self.label_word_list = [self.label_to_word[label] for label in ['0', '1']]
         else:
-            print("I am at line 350 dataset.py")
             self.label_to_word = None
             self.label_word_list = None
 

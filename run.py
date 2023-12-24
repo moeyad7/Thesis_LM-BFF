@@ -286,9 +286,7 @@ def main():
 
     # Load prompt/template/mapping file
     if data_args.prompt:
-        print("I am at line 291 run.py")
         if data_args.prompt_path is not None:
-            print("I am at line 293 run.py")
             assert data_args.prompt_id is not None
             prompt_list = []
             with open(data_args.prompt_path) as f:
@@ -300,8 +298,8 @@ def main():
             data_args.template, data_args.mapping = prompt_list[data_args.prompt_id] 
             logger.info("Specify load the %d-th prompt: %s | %s" % (data_args.prompt_id, data_args.template, data_args.mapping))
         else:
-            print("I am at line 305 run.py")
             if data_args.template_path is not None:
+                print("I am at line 302 run.py")
                 with open(data_args.template_path) as f:
                     data_args.template_list = []
                     for line in f:
