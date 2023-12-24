@@ -181,18 +181,13 @@ def tokenize_multipart_input(
                     new_tokens += enc(part)
 
             if part[:4] == 'sent' or part[1:5] == 'sent':
-                print("I am at line 206 dataset.py")
                 # If this part is the sentence, limit the sentence length
                 sent_id = int(part.split('_')[1])
                 if sent_id == 0:
-                    print("I am at line 210 dataset.py")
                     if first_sent_limit is not None:
-                        print("I am at line 212 dataset.py")
                         new_tokens = new_tokens[:first_sent_limit]
                 else:
-                    print("I am at line 215 dataset.py")
                     if other_sent_limit is not None:
-                        print("I am at line 217 dataset.py")
                         new_tokens = new_tokens[:other_sent_limit]
 
             input_ids += new_tokens
