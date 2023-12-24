@@ -131,64 +131,53 @@ def tokenize_multipart_input(
                 label_word = label_word_list[label_id]
                 new_tokens.append(label_word)
             elif part[:5] == 'sent_':
-                print("I am at line 145 dataset.py")
                 sent_id = int(part.split('_')[1])
                 new_tokens += enc(input_text_list[sent_id])
             elif part[:6] == '+sent_':
-                print("I am at line 148 dataset.py")
                 # Add space
                 sent_id = int(part.split('_')[1])
                 new_tokens += enc(' ' + input_text_list[sent_id])
             elif part[:6] == 'sent-_':
-                print("I am at line 154 dataset.py")
                 # Delete the last token
                 sent_id = int(part.split('_')[1])
                 new_tokens += enc(input_text_list[sent_id][:-1])
             elif part[:6] == 'sentl_':
-                print("I am at line 159 dataset.py")
                 # Lower case the first token
                 sent_id = int(part.split('_')[1])
                 text = input_text_list[sent_id]
                 text = text[:1].lower() + text[1:]
                 new_tokens += enc(text)
             elif part[:7] == '+sentl_':
-                print("I am at line 166 dataset.py")
                 # Lower case the first token and add space 
                 sent_id = int(part.split('_')[1])
                 text = input_text_list[sent_id]
                 text = text[:1].lower() + text[1:]
                 new_tokens += enc(' ' + text)
             elif part[:7] == 'sentl-_':
-                print("I am at line 173 dataset.py")
                 # Lower case the first token and discard the last token
                 sent_id = int(part.split('_')[1])
                 text = input_text_list[sent_id]
                 text = text[:1].lower() + text[1:]
                 new_tokens += enc(text[:-1])
             elif part[:6] == 'sentu_':
-                print("I am at line 180 dataset.py")
                 # Upper case the first token
                 sent_id = int(part.split('_')[1])
                 text = input_text_list[sent_id]
                 text = text[:1].upper() + text[1:]
                 new_tokens += enc(text)
             elif part[:7] == '+sentu_':
-                print("I am at line 187 dataset.py")
                 # Upper case the first token and add space
                 sent_id = int(part.split('_')[1])
                 text = input_text_list[sent_id]
                 text = text[:1].upper() + text[1:]
                 new_tokens += enc(' ' + text)
             else:
-                print("I am at line 194 dataset.py")
                 # Just natural language prompt
                 part = part.replace('_', ' ') 
                 # handle special case when T5 tokenizer might add an extra space
                 if len(part) == 1:
-                    print("I am at line 199 dataset.py")
                     new_tokens.append(tokenizer._convert_token_to_id(part))
                 else:
-                    print("I am at line 202 dataset.py")
                     new_tokens += enc(part)
 
             if part[:4] == 'sent' or part[1:5] == 'sent':
