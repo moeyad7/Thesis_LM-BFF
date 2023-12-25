@@ -609,6 +609,8 @@ class FewShotDataset(torch.utils.data.Dataset):
             augmented_example = []
             query_text = input_example_to_tuple(example) # Input sentence list for query
             support_by_label = [[] for i in range(len(label_map))]
+            print("Query Text:",query_text)
+            
 
             if self.args.gpt3_in_context_head or self.args.gpt3_in_context_tail:
                 support_labels = []

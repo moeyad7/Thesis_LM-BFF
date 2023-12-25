@@ -11,7 +11,7 @@ python3 tools/get_sbert_embedding.py --sbert_model $MODEL --seed 42 --do_test --
 for seed in 13 21 87 100
 do
     # for task in SST-2 sst-5 mr cr mpqa subj trec CoLA MRPC QQP STS-B MNLI SNLI QNLI RTE
-    for task in ar-en-sa ar-ner-corp my-ar-sa
+    for task in $TASK
     do
         cp data/k-shot/$task/$K-42/test_sbert-$MODEL.npy  data/k-shot/$task/$K-$seed/
     done
