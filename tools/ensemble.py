@@ -189,12 +189,13 @@ def main():
     for item in result_list:
         ok = True
         for cond in condition:
+            print(item[cond], condition[cond])
             if cond == 'task_name' and condition['task_name'] == 'mnli-mm':
                 if cond not in item or item[cond] != 'mnli':
                    ok = False
                    break
             else:
-                print(cond, condition[cond], item[cond]) 
+                print(item[cond], condition[cond])
                 if cond not in item or item[cond] != condition[cond]:
                     ok = False
                     break
