@@ -118,7 +118,7 @@ for TASK in $TASKS; do
                 ;;
             my-ar-sa)
                 TEMPLATE=*cls**sent_0*كانت**mask*.*sep+*
-                MAPPING="{'pos':'جيد','neg':'سيء'}"
+                MAPPING="{'pos':'good','neg':'bad'}"
                 TASK_EXTRA="--first_sent_limit 110 --other_sent_limit 60"
                 ;;
         esac
