@@ -185,7 +185,8 @@ def main():
         cache_dir=model_args.cache_dir,
     )
 
-    if config.model_type == 'roberta':
+    # if config.model_type == 'roberta':
+    if 'roberta' in config.model_type:
         model_fn = RobertaForPromptFinetuning
     elif config.model_type == 'bert':
         model_fn = BertForPromptFinetuning
