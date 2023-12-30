@@ -94,7 +94,7 @@ case $TASK in
         TASK_EXTRA="--first_sent_limit 110  --double_demo"
         ;;
     ar-en-sa)
-        TEMPLATE=*cls**sent_0*_It_was*mask*.*sep+*
+        TEMPLATE=*cls**sent_0*_كانت*mask*.*sep+*
         MAPPING="{'positive':'جيد','negative':'سيء','neutral':'ربما'}"
         TASK_EXTRA="--first_sent_limit 512  --double_demo"
         ;;
@@ -103,7 +103,7 @@ case $TASK in
         MAPPING="{'O': 'آخر', 'LOC': 'موقع', 'ORG': 'منظمة', 'PERS': 'شخص', 'MISC': 'متنوع'}"
         ;;
     my-ar-sa)
-        TEMPLATE=*cls**sent_0*كانت**mask*.*sep+*
+        TEMPLATE=*cls**sent_0*_كانت**mask*.*sep+*
         MAPPING="{'pos':'جيد','neg':'سيء'}"
         TASK_EXTRA="--first_sent_limit 110  --double_demo --other_sent_limit 60"
         ;;
