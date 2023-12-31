@@ -362,10 +362,8 @@ def main():
 
     # Automatically generate template for using demonstrations
     if data_args.auto_demo and model_args.few_shot_type == 'prompt-demo':
-        print("I am at line 370 run.py")
         # GPT-3's in-context learning
         if data_args.gpt3_in_context_head or data_args.gpt3_in_context_tail: 
-            print("I am at line 373 run.py")
             logger.info("Automatically convert the template to GPT-3's in-context learning.")
             assert data_args.template_list is None
 
@@ -375,7 +373,6 @@ def main():
             # Single sentence or sentence pair?
             sent_num = 1
             if "_1" in old_template:
-                print("I am at line 383 run.py")
                 sent_num = 2
             for instance_id in range(data_args.gpt3_in_context_num):
                 sub_template = old_template + ''
@@ -385,18 +382,14 @@ def main():
                 # Replace mask
                 sub_template = sub_template.replace("*mask*", "*labelx_{}*".format(instance_id))
                 if data_args.gpt3_in_context_tail:
-                    print("I am at line 393 run.py")
                     new_template = new_template + sub_template # Put context at the end
                 else:
-                    print("I am at line 396 run.py")
                     new_template = sub_template + new_template # Put context at the beginning
             logger.info("| {} => {}".format(data_args.template, new_template))
             data_args.template = new_template
         else:
-            print("I am at line 401 run.py")
             logger.info("Automatically convert the template to using demonstrations.")
             if data_args.template_list is not None:
-                print("I am at line 404 run.py")
                 for i in range(len(data_args.template_list)):
                     old_template = data_args.template_list[i]
                     new_template = old_template + ''
@@ -423,7 +416,6 @@ def main():
                 # Single sentence or sentence pair?
                 sent_num = 1
                 if "_1" in old_template:
-                    print("I am at line 432 run.py")
                     sent_num = 2
                 for label_id in range(num_labels):
                     sub_template = old_template + ''
