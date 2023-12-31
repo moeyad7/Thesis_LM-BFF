@@ -284,7 +284,7 @@ class FewShotDataset(torch.utils.data.Dataset):
 
             for key in self.label_to_word:
                 # For RoBERTa/BART/T5, tokenization also considers space, so we use space+word as label words.
-                print(self.label_to_word[key])
+                print(self.label_to_word)
                 if self.label_to_word[key][0] not in ['<', '[', '.', ',']:
                     # Make sure space+word is in the vocabulary
                     assert len(tokenizer.tokenize(' ' + self.label_to_word[key])) == 1
