@@ -82,6 +82,8 @@ def main():
     parser.add_argument("--key", type=str, default='', help="Validation metric name")
     parser.add_argument("--test_key", type=str, default="", help="Test metric name")
     parser.add_argument("--test_key2", type=str, default="", help="Second test metric name")
+    parser.add_argument("--model_name_or_path", type=str, default="", help="Model name or path")
+
 
     args = parser.parse_args()
 
@@ -269,7 +271,9 @@ def main():
         'my-ar-sa': 'my-ar-sa',
     }
 
-    tokenizer = AutoTokenizer.from_pretrained('roberta-large')
+    # tokenizer = AutoTokenizer.from_pretrained('roberta-large')
+    tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path)
+     
     ensemble_result = np.zeros((len(seed_result)))
     ensemble_result2 = np.zeros((len(seed_result))) # for second metric
 
