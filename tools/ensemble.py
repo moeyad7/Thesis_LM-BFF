@@ -44,6 +44,8 @@ def get_labels(data_dir, k, seed, task, print_name):
         data = pd.read_csv(os.path.join(data_dir, print_name, '{}-{}'.format(k, seed), 'test.csv'), header=None).values.tolist()
         label_ids = np.zeros((len(data)), dtype=np.uint8)
         for i, example in enumerate(data):
+            if print_name in ['ar-en-sa']:
+                label_ids[i] = example[1]
             label_ids[i] = example[0]
     elif print_name in ["MNLI", "MRPC", "QNLI", "QQP", "RTE", "SNLI", "SST-2", "STS-B", "WNLI", "CoLA"]:
         lines = []
