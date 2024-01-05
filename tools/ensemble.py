@@ -10,7 +10,6 @@ from transformers import GlueDataTrainingArguments, glue_compute_metrics
 from transformers.data.metrics import simple_accuracy
 from transformers.data.processors.glue import glue_processors
 from sklearn.metrics import precision_recall_fscore_support
-from src.processors import processors_mapping, num_labels_mapping, output_modes_mapping, compute_metrics_mapping, bound_mapping
 
 def get_glue_label(task, line):
     if task in ["MNLI", "MRPC", "QNLI", "QQP", "RTE", "SNLI", "SST-2", "STS-B", "WNLI", "CoLA"]:
@@ -49,17 +48,7 @@ def get_labels(data_dir, k, seed, task, print_name):
                 label_ids[i] = example[1]
             label_ids[i] = example[0]
     elif print_name in ['ar-en-sa','ar-ner-corp','my-ar-sa']:
-        # use src.processor
-        processor = processors_mapping[task]()
-        print(processor)
-        label_list = processor.get_labels()
-        print(label_list)
-        test_examples = processor.get_test_examples(os.path.join(data_dir, print_name, '{}-{}'.format(k, seed)))
-        label_map = {k: i for i, k in enumerate(label_list)}
-        print(label_map)
-        label_ids = np.zeros((len(test_examples)), dtype=np.uint8)
-        for i, example in enumerate(test_examples):
-            label_ids[i] = label_map[example.label]
+       
     elif print_name in ["MNLI", "MRPC", "QNLI", "QQP", "RTE", "SNLI", "SST-2", "STS-B", "WNLI", "CoLA"]:
         lines = []
         file_name = os.path.join(data_dir, print_name, '{}-{}'.format(k, seed), 'test.tsv')
