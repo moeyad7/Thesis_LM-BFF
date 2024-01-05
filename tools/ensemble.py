@@ -10,7 +10,7 @@ from transformers import GlueDataTrainingArguments, glue_compute_metrics
 from transformers.data.metrics import simple_accuracy
 from transformers.data.processors.glue import glue_processors
 from sklearn.metrics import precision_recall_fscore_support
-from ..src.processors import processors_mapping, num_labels_mapping, output_modes_mapping, compute_metrics_mapping, bound_mapping
+from src.processors import processors_mapping, num_labels_mapping, output_modes_mapping, compute_metrics_mapping, bound_mapping
 
 def get_glue_label(task, line):
     if task in ["MNLI", "MRPC", "QNLI", "QQP", "RTE", "SNLI", "SST-2", "STS-B", "WNLI", "CoLA"]:
