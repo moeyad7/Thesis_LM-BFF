@@ -100,7 +100,7 @@ case $TASK in
         ;;
     ar-ner-corp)
         TEMPLATE=*cls**mask*_إنها*sent_0*.*sep+*
-        MAPPING="{'O': 'آخر', 'LOC': 'موقع', 'ORG': 'منظمة', 'PERS': 'شخص', 'MISC': 'متنوع'}"
+        MAPPING="{\"O\": 'آخر', 'LOC': 'موقع', 'ORG': 'منظمة', 'PERS': 'شخص', 'MISC': 'متنوع'}"
         ;;
     my-ar-sa)
         TEMPLATE=*cls**sent_0*_كانت**mask*.*sep+*
