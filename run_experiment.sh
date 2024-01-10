@@ -99,7 +99,7 @@ case $TASK in
         TASK_EXTRA="--first_sent_limit 512  --double_demo"
         ;;
     ar-ner-corp)
-        TEMPLATE="*cls**sent_0*_(*mask*)*sep+*"
+        TEMPLATE="*cls**mask*,*sent_0**sep+*"
         MAPPING="{"O": 'آخر', 'LOC': 'موقع', 'ORG': 'منظمة', 'PERS': 'شخص', 'MISC': 'متنوع'}"
         ;;
     my-ar-sa)
