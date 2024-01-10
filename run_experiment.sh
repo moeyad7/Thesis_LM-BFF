@@ -94,16 +94,16 @@ case $TASK in
         TASK_EXTRA="--first_sent_limit 110  --double_demo"
         ;;
     ar-en-sa)
-        TEMPLATE=*cls**sent_0*_كانت*mask*.*sep+*
+        TEMPLATE=*cls**sent_0*:*mask**sep+*
         MAPPING="{'positive':'جيد','negative':'سيء','neutral':'ربما'}"
         TASK_EXTRA="--first_sent_limit 512  --double_demo"
         ;;
     ar-ner-corp)
-        TEMPLATE=*cls**mask*_إنها*sent_0*.*sep+*
-        # MAPPING="{\"O\": 'آخر', 'LOC': 'موقع', 'ORG': 'منظمة', 'PERS': 'شخص', 'MISC': 'متنوع'}"
+        TEMPLATE=*cls**sent_0*_(*mask*)*sep+*
+        MAPPING="{"O": 'آخر', 'LOC': 'موقع', 'ORG': 'منظمة', 'PERS': 'شخص', 'MISC': 'متنوع'}"
         ;;
     my-ar-sa)
-        TEMPLATE=*cls**sent_0*_كانت**mask*.*sep+*
+        TEMPLATE=*cls**mask*الجملة_السابقة*sent_0*.*sep+*
         MAPPING="{'pos':'جيد','neg':'سيء'}"
         TASK_EXTRA="--first_sent_limit 110  --double_demo --other_sent_limit 60"
         ;;
