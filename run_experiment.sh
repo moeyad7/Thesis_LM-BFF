@@ -94,7 +94,7 @@ case $TASK in
         TASK_EXTRA="--first_sent_limit 110  --double_demo"
         ;;
     ar-en-sa)
-        TEMPLATE="*cls**sent_0*_(*mask*)*sep+*"
+        TEMPLATE=*cls**sent_0**mask*الجملة_القادمة.*sep+*
         MAPPING="{'positive':'جيد','negative':'سيء','neutral':'ربما'}"
         TASK_EXTRA="--first_sent_limit 512  --double_demo"
         ;;
