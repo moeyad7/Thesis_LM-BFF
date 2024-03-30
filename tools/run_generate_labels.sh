@@ -116,6 +116,10 @@ for TASK in $TASKS; do
                 TEMPLATE=*cls**mask*_إنها*sent_0*.*sep+*
                 MAPPING="{'O': 'آخر', 'LOC': 'موقع', 'ORG': 'منظمة', 'PERS': 'شخص', 'MISC': 'متنوع'}"
                 ;;
+            ar-en-ner)
+                TEMPLATE=*cls**mask*_إنها*sent_0*.*sep+*
+                MAPPING="{"O": 'آخر', 'LOC': 'موقع', 'ORG': 'كيان', 'PERS': 'شخص', 'MISC': 'متنوع'}"
+                ;;
             my-ar-sa)
                 TEMPLATE=*cls**sent_0*كانت**mask*.*sep+*
                 MAPPING="{'pos':'ممتاز','neg':'سيء'}"

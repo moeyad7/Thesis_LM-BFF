@@ -131,6 +131,10 @@ def main():
             args.key = 'ar-ner-corp_dev_eval_acc'
             args.test_key = 'ar-ner-corp_test_eval_acc'
             print_name = condition['task_name']
+        elif condition['task_name'] == 'ar-en-ner':
+            args.key = 'ar-en-ner_dev_eval_acc'
+            args.test_key = 'ar-en-ner_test_eval_acc'
+            print_name = condition['task_name']
         elif condition['task_name'] == 'my-ar-sa':
             args.key = 'my-ar-sa_dev_eval_acc'
             args.test_key = 'my-ar-sa_test_eval_acc'

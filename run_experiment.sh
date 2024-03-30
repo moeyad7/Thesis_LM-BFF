@@ -102,6 +102,10 @@ case $TASK in
         TEMPLATE="*cls**mask*,*sent_0**sep+*"
         MAPPING="{"O": 'آخر', 'LOC': 'موقع', 'ORG': 'منظمة', 'PERS': 'شخص', 'MISC': 'متنوع'}"
         ;;
+    ar-en-ner)
+        TEMPLATE="*cls**mask*,*sent_0**sep+*"
+        MAPPING="{"O": 'آخر', 'LOC': 'موقع', 'ORG': 'كيان', 'PERS': 'شخص', 'MISC': 'متنوع'}"
+        ;;
     my-ar-sa)
         TEMPLATE=*cls**mask*الجملة_السابقة*sent_0*.*sep+*
         MAPPING="{'pos':'جيد','neg':'سيء'}"

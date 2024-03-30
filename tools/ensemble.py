@@ -40,7 +40,7 @@ def get_glue_label(task, line):
         raise NotImplementedError
 
 def get_labels(data_dir, k, seed, task, print_name):
-    if print_name in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec','ar-en-sa','ar-ner-corp','my-ar-sa']:
+    if print_name in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec','ar-en-sa','ar-ner-corp','ar-en-ner','my-ar-sa']:
         data = pd.read_csv(os.path.join(data_dir, print_name, '{}-{}'.format(k, seed), 'test.csv'), header=None).values.tolist()
         label_ids = np.zeros((len(data)), dtype=np.uint8)
         for i, example in enumerate(data):
@@ -175,6 +175,9 @@ def main():
         elif condition['task_name'] == 'ar-ner-corp':
             args.key = 'ar-ner-corp_dev_eval_acc'
             args.test_key = 'ar-ner-corp_test_eval_acc'
+        elif condition['task_name'] == 'ar-en-ner':
+            args.key = 'ar-en-ner_dev_eval_acc'
+            args.test_key = 'ar-en-ner_test_eval_acc'
         elif condition['task_name'] == 'my-ar-sa':
             args.key = 'my-ar-sa_dev_eval_acc'
             args.test_key = 'my-ar-sa_test_eval_acc'
@@ -269,6 +272,7 @@ def main():
         'trec': 'trec',
         'ar-en-sa': 'ar-en-sa',
         'ar-ner-corp': 'ar-ner-corp',
+        'ar-en-ner': 'ar-en-ner',
         'my-ar-sa': 'my-ar-sa',
     }
 
@@ -294,7 +298,7 @@ def main():
         
         # Compute metrics
         preds = mean_logits.argmax(-1)
-        if condition['task_name'] in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec','ar-en-sa','ar-ner-corp','my-ar-sa']:
+        if condition['task_name'] in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec','ar-en-sa','ar-ner-corp','ar-en-ner','my-ar-sa']:
             acc = simple_accuracy(preds, labels)
     
             # Calculate precision, recall, and F1 score

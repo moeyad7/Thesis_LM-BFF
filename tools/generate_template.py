@@ -289,6 +289,7 @@ def search_template(model, tokenizer, task_name, k, seed, beam, output_dir, data
         'RTE': {'not_entailment':'No','entailment':'Yes'},
         'ar-en-sa': {'positive':'جيد','negative':'سيء','neutral':'ربما'},
         'ar-ner-corp':{'O': 'آخر', 'LOC': 'موقع', 'ORG': 'منظمة', 'PERS': 'شخص', 'MISC': 'متنوع'},
+        'ar-en-ner':{'O': 'آخر', 'LOC': 'موقع', 'ORG': 'كيان', 'PERS': 'شخص', 'MISC': 'متنوع'},
         'my-ar-sa':{'pos':'جيد','neg':'سيء'},
     }
 
@@ -300,7 +301,7 @@ def search_template(model, tokenizer, task_name, k, seed, beam, output_dir, data
     os.makedirs(os.path.join(output_dir, task_name), exist_ok=True)
     f = open(os.path.join(output_dir, task_name, "{}-{}.txt".format(k, seed)), 'w')
 
-    if task_name in ['SST-2', 'sst-5', 'mr', 'cr', 'subj', 'trec', 'CoLA', 'mpqa','ar-en-sa','ar-ner-corp','my-ar-sa']:
+    if task_name in ['SST-2', 'sst-5', 'mr', 'cr', 'subj', 'trec', 'CoLA', 'mpqa','ar-en-sa','ar-ner-corp','ar-en-ner','my-ar-sa']:
         # Single sentence tasks
         # We take two kinds of templates: put [MASK] at the beginning or the end
         template = "*cls**sentu_0**<extra_id_0>**label**<extra_id_1>**sep+*"

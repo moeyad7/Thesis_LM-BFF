@@ -466,7 +466,7 @@ class WnliProcessor(DataProcessor):
     
 class TextClassificationProcessor(DataProcessor):
     """
-    Data processor for text classification datasets (mr, sst-5, subj, trec, cr, mpqa, ar-en-sa, ar-ner-corp, my-ar-sa).
+    Data processor for text classification datasets (mr, sst-5, subj, trec, cr, mpqa, ar-en-sa, ar-ner-corp, ar-en-ner,my-ar-sa).
     """
 
     def __init__(self, task_name):
@@ -509,7 +509,7 @@ class TextClassificationProcessor(DataProcessor):
             return list(range(2))
         elif self.task_name == "ar-en-sa":
             return ['positive', 'negative', 'neutral']
-        elif self.task_name == "ar-ner-corp":
+        elif self.task_name == "ar-ner-corp" or self.task_name == "ar-en-ner":
             return ['PERS', 'ORG', 'LOC', 'MISC','O']
         elif self.task_name == "my-ar-sa":
             return ['pos', 'neg']
@@ -536,7 +536,7 @@ class TextClassificationProcessor(DataProcessor):
                 examples.append(InputExample(guid=guid, text_a=line[1], label=line[0]))
             elif self.task_name in ['ar-en-sa']:
                 examples.append(InputExample(guid=guid, text_a=line[0], label=line[1]))
-            elif self.task_name in ['ar-ner-corp']:
+            elif self.task_name in ['ar-ner-corp','ar-en-ner']:
                 examples.append(InputExample(guid=guid, text_a=line[1], label=line[0]))
             elif self.task_name in ['my-ar-sa']:
                 examples.append(InputExample(guid=guid, text_a=line[1], label=line[0]))
@@ -575,6 +575,7 @@ processors_mapping = {
     "mpqa": TextClassificationProcessor("mpqa"),
     'ar-en-sa': TextClassificationProcessor("ar-en-sa"),
     'ar-ner-corp': TextClassificationProcessor('ar-ner-corp'),
+    'ar-en-ner': TextClassificationProcessor('ar-en-ner'),
     'my-ar-sa': TextClassificationProcessor("my-ar-sa"),
 }
 
@@ -597,6 +598,7 @@ num_labels_mapping = {
     "mpqa": 2,
     "ar-en-sa": 3,
     "ar-ner-corp": 5,
+    "ar-en-ner": 5,
     "my-ar-sa": 2,
 }
 
@@ -620,6 +622,7 @@ output_modes_mapping = {
     "mpqa": "classification",
     "ar-en-sa": "classification",
     "ar-ner-corp": "classification",
+    "ar-en-ner": "classification",
     "my-ar-sa": "classification",
 }
 
@@ -644,6 +647,7 @@ compute_metrics_mapping = {
     "mpqa": text_classification_metrics,
     "ar-en-sa": text_classification_metrics,
     "ar-ner-corp": text_classification_metrics,
+    "ar-en-ner": text_classification_metrics,
     "my-ar-sa": text_classification_metrics,
 }
 
